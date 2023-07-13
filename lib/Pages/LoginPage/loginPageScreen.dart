@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/registerPage/components.dart';
 import 'package:tutorchat/Pages/repairPage/repairScreen.dart';
 import 'package:tutorchat/extentions.dart';
 
@@ -13,6 +14,10 @@ class loginScreen extends StatefulWidget {
 }
 
 class _loginScreenState extends State<loginScreen> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController paswordController = TextEditingController();
+  bool obscure = false;
+
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -67,23 +72,7 @@ class _loginScreenState extends State<loginScreen> {
               const SizedBox(
                 height: 50,
               ),
-              Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(left: 10),
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff9B9B9B).withOpacity(0.15),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Your username',
-                        hintStyle: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: '969696'.toColor())),
-                  )),
+              form(usernameController, 'Your username'),
               const SizedBox(
                 height: 20,
               ),
@@ -93,14 +82,29 @@ class _loginScreenState extends State<loginScreen> {
                   padding: const EdgeInsets.only(left: 10),
                   height: 56,
                   decoration: BoxDecoration(
-                    color: const Color(0xff9B9B9B).withOpacity(0.15),
+                    color: 'F5F5F5'.toColor(),
                   ),
                   child: TextField(
+                    obscureText: !obscure,
                     decoration: InputDecoration(
                         border: InputBorder.none,
-                        suffixIcon: const Icon(
-                          Icons.visibility_off_outlined,
-                          color: Colors.black,
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              obscure = !obscure;
+                            });
+                          },
+                          child: obscure == false
+                              ? const Icon(
+                                  size: 20,
+                                  Icons.visibility_off_outlined,
+                                  color: Colors.black,
+                                )
+                              : const Icon(
+                                  size: 20,
+                                  Icons.visibility,
+                                  color: Colors.black,
+                                ),
                         ),
                         hintText: 'Your password',
                         hintStyle: TextStyle(
