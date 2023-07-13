@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tutorchat/extentions.dart';
 
-import '../registerPage/registerScreenWphone.dart';
+import 'createPasswordScreen.dart';
 
 class repairPhoneScreen extends StatefulWidget {
   const repairPhoneScreen({super.key});
@@ -47,14 +47,14 @@ class _repairPhoneScreenState extends State<repairPhoneScreen> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
-                    height: 90,
+                    height: 110,
                   ),
                   Image.asset(
                     'assets/png/enterPincode.png',
@@ -140,7 +140,7 @@ class _repairPhoneScreenState extends State<repairPhoneScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const registerScreenWphone(),
+                        builder: (context) => const createPasswordScreen(),
                       ));
                     },
                     child: Container(

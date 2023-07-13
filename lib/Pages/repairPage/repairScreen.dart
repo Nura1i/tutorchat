@@ -34,7 +34,7 @@ class _repairScreenState extends State<repairScreen> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
@@ -42,7 +42,7 @@ class _repairScreenState extends State<repairScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const SizedBox(
-                    height: 70,
+                    height: 90,
                   ),
                   Image.asset(
                     'assets/png/repairScreen.png',

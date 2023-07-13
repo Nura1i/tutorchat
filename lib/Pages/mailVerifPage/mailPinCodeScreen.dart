@@ -47,14 +47,14 @@ class _pinCodeScreenState extends State<mailPinScreen> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
-                    height: 105,
+                    height: 125,
                   ),
                   Image.asset(
                     'assets/png/pinMail.png',

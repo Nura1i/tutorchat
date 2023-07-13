@@ -29,7 +29,7 @@ class _phoneVerifScreenState extends State<mailVerifScreen> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
@@ -37,7 +37,7 @@ class _phoneVerifScreenState extends State<mailVerifScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const SizedBox(
-                    height: 120,
+                    height: 140,
                   ),
                   Image.asset(
                     'assets/png/repairMail.png',

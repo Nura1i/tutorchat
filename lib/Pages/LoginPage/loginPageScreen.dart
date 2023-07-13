@@ -25,7 +25,7 @@ class _loginScreenState extends State<loginScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -34,7 +34,7 @@ class _loginScreenState extends State<loginScreen> {
             mainAxisSize: MainAxisSize.max,
             children: [
               const SizedBox(
-                height: 45,
+                height: 65,
               ),
               Center(
                 child: Image.asset(

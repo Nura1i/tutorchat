@@ -18,14 +18,14 @@ class _verifyScreenState extends State<verifyScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
                 const SizedBox(
-                  height: 90,
+                  height: 110,
                 ),
                 Image.asset(
                   'assets/png/verification.png',

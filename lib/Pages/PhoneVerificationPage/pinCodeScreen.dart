@@ -47,14 +47,14 @@ class _pinCodeScreenState extends State<pinCodeScreen> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(
-                    height: 90,
+                    height: 110,
                   ),
                   Image.asset(
                     'assets/png/phoneVerify.png',

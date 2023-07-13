@@ -28,7 +28,7 @@ class _phoneVerifScreenState extends State<phoneVerifScreen> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
@@ -36,7 +36,7 @@ class _phoneVerifScreenState extends State<phoneVerifScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const SizedBox(
-                    height: 90,
+                    height: 110,
                   ),
                   Image.asset(
                     'assets/png/phoneVerify.png',

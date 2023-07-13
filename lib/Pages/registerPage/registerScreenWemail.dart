@@ -21,14 +21,14 @@ class _registerScreenWphoneState extends State<registerScreenWemail> {
       body: Container(
           height: double.infinity,
           width: double.infinity,
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 45,
+                  height: 65,
                 ),
                 Center(
                   child: Image.asset(
