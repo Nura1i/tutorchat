@@ -41,6 +41,7 @@ dependencies:
   dotted_border: ^2.0.0+3
   pinput: ^2.2.31
   flutter_inset_box_shadow: ^1.0.8
+  flutter_rating_bar: ^4.0.1
   
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,7 @@ flutter:
    - assets/
    - assets/png/
    - assets/svg/
+   - icon/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -94,6 +96,12 @@ flutter:
     - family: OpenSans
       fonts:
         - asset: assets/fonts/OpenSans-Light.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Light.ttf
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/Rubik-Bold.ttf
      #    style: Regular
   #   - family: Trajan Pro
   #     fonts:
