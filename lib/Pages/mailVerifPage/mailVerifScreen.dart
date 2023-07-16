@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/mailVerifPage/responses.dart';
+
 import 'package:tutorchat/extentions.dart';
+import 'package:tutorchat/widgets/sms_validator.dart';
 
-import 'mailPinCodeScreen.dart';
+String? email;
+TextEditingController emailController = TextEditingController();
 
-class mailVerifScreen extends StatefulWidget {
-  const mailVerifScreen({super.key});
+class mailVerifScreen extends StatelessWidget {
+  const mailVerifScreen({
+    super.key,
+  });
 
-  @override
-  State<mailVerifScreen> createState() => _phoneVerifScreenState();
-}
-
-class _phoneVerifScreenState extends State<mailVerifScreen> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -80,7 +80,6 @@ class _phoneVerifScreenState extends State<mailVerifScreen> {
                           .copyWith(fontSize: 15),
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        counterText: '',
                         border: InputBorder.none,
                         hintText: 'Enter Email',
                         hintStyle: TextStyle(
@@ -94,10 +93,19 @@ class _phoneVerifScreenState extends State<mailVerifScreen> {
                     height: 130,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const mailPinScreen(),
-                      ));
+                    onTap: () async {
+                      email = emailController.text;
+                      bool isEmail(String value) {
+                        final regex =
+                            RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$');
+                        return regex.hasMatch(value);
+                      }
+
+                      if (isEmail(email!)) {
+                        mailVerifFunc(email!, context);
+                      } else {
+                        smsValidator(context, 'Email is not Valid');
+                      }
                     },
                     child: Container(
                       height: 56,

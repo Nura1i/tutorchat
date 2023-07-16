@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/registerPage/components.dart';
-import 'package:tutorchat/Pages/registerPage/registerUserDataScreen.dart';
+import 'package:tutorchat/Pages/registerPage/registerUserDataWemailScreen.dart';
 import 'package:tutorchat/extentions.dart';
+import 'package:tutorchat/widgets/sms_validator.dart';
 
 class registerScreenWemail extends StatefulWidget {
-  const registerScreenWemail({super.key});
+  final userToken;
+  const registerScreenWemail({super.key, required this.userToken});
 
   @override
   State<registerScreenWemail> createState() => _registerScreenWphoneState();
@@ -71,7 +73,7 @@ class _registerScreenWphoneState extends State<registerScreenWemail> {
                 const SizedBox(
                   height: 20,
                 ),
-                form(usernameController, 'Phone number'),
+                form(phoneController, 'Phone number'),
                 const SizedBox(
                   height: 20,
                 ),
@@ -85,9 +87,22 @@ class _registerScreenWphoneState extends State<registerScreenWemail> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const registerUserDataScreen(),
-                    ));
+                    if (usernameController.text.isEmpty ||
+                        phoneController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        confirmController.text.isEmpty ||
+                        confirmController.text != passwordController.text) {
+                      smsValidator(context, 'Valid data');
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => registerUserDataWemailScreen(
+                            userToken: widget.userToken,
+                            password: passwordController.text,
+                            confirmPassword: confirmController.text,
+                            phone: phoneController.text,
+                            username: usernameController.text),
+                      ));
+                    }
                   },
                   child: Container(
                     height: 56,

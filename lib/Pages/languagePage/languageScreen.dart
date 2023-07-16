@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tutorchat/extentions.dart';
+import 'package:tutorchat/widgets/sms_validator.dart';
 
 import '../LoginPage/loginPageScreen.dart';
 
@@ -132,31 +133,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           ),
                         );
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            duration: const Duration(milliseconds: 1000),
-                            elevation: 100,
-                            shape: const StadiumBorder(),
-                            behavior: SnackBarBehavior.floating,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 30),
-                            backgroundColor: Colors.red,
-                            content: Text(
-                              'Select Language',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: "Lora",
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
+                        smsValidator(context, 'Select Langugage');
                       }
                     },
                     child: Container(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:tutorchat/Pages/languagePage/languageScreen.dart';
+import 'package:tutorchat/Pages/VerificationPage/verificationScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,9 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LanguageScreen(
-        title: 'Demo',
-      ),
+      home: const verifyScreen(),
     );
   }
 }

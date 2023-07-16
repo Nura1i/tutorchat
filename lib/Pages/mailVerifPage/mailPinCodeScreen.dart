@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:http/http.dart';
 import 'package:pinput/pinput.dart';
+import 'package:tutorchat/Pages/mailVerifPage/mailVerifScreen.dart';
+import 'package:tutorchat/Pages/mailVerifPage/responses.dart';
 import 'package:tutorchat/extentions.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:tutorchat/widgets/sms_validator.dart';
 
+import '../../models/tokenModel.dart';
 import '../registerPage/registerScreenWemail.dart';
 
 class mailPinScreen extends StatefulWidget {
-  const mailPinScreen({super.key});
+  final email;
+  const mailPinScreen({super.key, required this.email});
 
   @override
-  State<mailPinScreen> createState() => _pinCodeScreenState();
+  State<mailPinScreen> createState() => _mailPinScreenState();
 }
 
-class _pinCodeScreenState extends State<mailPinScreen> {
+class _mailPinScreenState extends State<mailPinScreen> {
   TextEditingController smsController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+    CountdownTimerController? controller;
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 44,
@@ -95,7 +106,7 @@ class _pinCodeScreenState extends State<mailPinScreen> {
                     height: 5,
                   ),
                   Text(
-                    'username@gmail.com',
+                    widget.email,
                     style: TextStyle(
                         color: '347AE2'.toColor(),
                         fontWeight: FontWeight.w500,
@@ -122,7 +133,9 @@ class _pinCodeScreenState extends State<mailPinScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const mailVerifScreen(),
+                            ));
                           },
                           child: const Text(
                             "Emailni o'zgartirish",
@@ -132,13 +145,28 @@ class _pinCodeScreenState extends State<mailPinScreen> {
                                 fontFamily: 'OpenSans'),
                           ),
                         ),
-                        Text(
-                          "Qayta jo'natish",
-                          style: TextStyle(
-                              color: '347AE2'.toColor(),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400),
-                        )
+                        CountdownTimer(
+                          controller: controller,
+                          widgetBuilder: (context, time) {
+                            if (time == null) {
+                              return GestureDetector(
+                                  onTap: () async {
+                                    setState(() {});
+                                    await mailVerifFunc(widget.email!, context);
+                                  },
+                                  child: Text(
+                                    "Qayta jo'natish",
+                                    style: TextStyle(
+                                        color: '347AE2'.toColor(),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400),
+                                  ));
+                            }
+                            return Text(
+                                '0${time.min ?? '0'}:${time.sec! < 10 ? '0${time.sec}' : '${time.sec}'}');
+                          },
+                          endTime: endTime,
+                        ),
                       ],
                     ),
                   ),
@@ -146,10 +174,19 @@ class _pinCodeScreenState extends State<mailPinScreen> {
                     height: 80,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const registerScreenWemail(),
-                      ));
+                    onTap: () async {
+                      Response response = await mailPinVerifFunc(
+                          widget.email, smsController.text);
+
+                      if (response.statusCode == 200) {
+                        final token = tokenModelFromJson(response.body);
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              registerScreenWemail(userToken: token.token),
+                        ));
+                      } else {
+                        smsValidator(context, 'SMS kod xato');
+                      }
                     },
                     child: Container(
                       height: 56,

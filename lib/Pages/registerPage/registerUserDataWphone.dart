@@ -3,14 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/registerPage/components.dart';
 import 'package:tutorchat/extentions.dart';
 
-class registerUserDataScreen extends StatefulWidget {
-  const registerUserDataScreen({super.key});
+class registerUserDataWphoneScreen extends StatefulWidget {
+  final username;
+  final email;
+  final password;
+  final confirmPassword;
+  const registerUserDataWphoneScreen(
+      {super.key,
+      required this.username,
+      required this.email,
+      required this.password,
+      required this.confirmPassword});
 
   @override
-  State<registerUserDataScreen> createState() => _registerUserDataScreenState();
+  State<registerUserDataWphoneScreen> createState() =>
+      _registerUserDataScreenState();
 }
 
-class _registerUserDataScreenState extends State<registerUserDataScreen> {
+class _registerUserDataScreenState extends State<registerUserDataWphoneScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController dataController = TextEditingController();
   TextEditingController adressController = TextEditingController();
@@ -221,9 +231,9 @@ class _registerUserDataScreenState extends State<registerUserDataScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const registerUserDataScreen(),
-                  ));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const registerUserDataWphoneScreen(),
+                  // ));
                 },
                 child: Container(
                   height: 56,

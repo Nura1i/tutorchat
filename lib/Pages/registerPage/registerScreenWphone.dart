@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/mailVerifPage/mailVerifScreen.dart';
 import 'package:tutorchat/Pages/registerPage/components.dart';
-import 'package:tutorchat/Pages/registerPage/registerUserDataScreen.dart';
+import 'package:tutorchat/Pages/registerPage/registerUserDataWphone.dart';
 import 'package:tutorchat/extentions.dart';
 
 class registerScreenWphone extends StatefulWidget {
@@ -82,7 +83,12 @@ class _registerScreenWphoneState extends State<registerScreenWphone> {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const registerUserDataScreen(),
+                      builder: (context) => registerUserDataWphoneScreen(
+                        email: emailController.text,
+                        username: usernameController.text,
+                        confirmPassword: confirmController.text,
+                        password: passwordController.text,
+                      ),
                     ));
                   },
                   child: Container(
