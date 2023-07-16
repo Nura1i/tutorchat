@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tutorchat/Pages/PhoneVerificationPage/pinCodeScreen.dart';
+import 'package:tutorchat/Pages/PhoneVerificationPage/responses.dart';
 import 'package:tutorchat/extentions.dart';
+
+import '../../widgets/sms_validator.dart';
 
 class phoneVerifScreen extends StatefulWidget {
   const phoneVerifScreen({super.key});
@@ -9,10 +11,12 @@ class phoneVerifScreen extends StatefulWidget {
   State<phoneVerifScreen> createState() => _phoneVerifScreenState();
 }
 
+String? phone;
+TextEditingController phoneController = TextEditingController();
+
 class _phoneVerifScreenState extends State<phoneVerifScreen> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController phoneController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -114,10 +118,20 @@ class _phoneVerifScreenState extends State<phoneVerifScreen> {
                     height: 130,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const pinCodeScreen(),
-                      ));
+                    onTap: () async {
+                      phone = phoneController.text;
+
+                      if (phone!.length == 9) {
+                        int? numb = int.tryParse(phone!);
+                        if (numb is num) {
+                          phoneVerifFunc(
+                              '+998${phoneController.text}', context);
+                        } else {
+                          smsValidator(context, 'not valid phoneNumber');
+                        }
+                      } else {
+                        smsValidator(context, 'not valid phoneNumber');
+                      }
                     },
                     child: Container(
                       height: 56,

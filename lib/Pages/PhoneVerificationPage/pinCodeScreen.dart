@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+import 'package:http/http.dart';
 import 'package:pinput/pinput.dart';
+import 'package:tutorchat/Pages/PhoneVerificationPage/phoneVerifScreen.dart';
+import 'package:tutorchat/Pages/PhoneVerificationPage/responses.dart';
 import 'package:tutorchat/extentions.dart';
+import 'package:tutorchat/widgets/sms_validator.dart';
 
+import '../../models/tokenModel.dart';
 import '../registerPage/registerScreenWphone.dart';
 
 class pinCodeScreen extends StatefulWidget {
-  const pinCodeScreen({super.key});
+  final String phoneNumber;
+  const pinCodeScreen({super.key, required this.phoneNumber});
 
   @override
   State<pinCodeScreen> createState() => _pinCodeScreenState();
@@ -15,6 +23,8 @@ class _pinCodeScreenState extends State<pinCodeScreen> {
   TextEditingController smsController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+    CountdownTimerController? controller;
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 44,
@@ -95,7 +105,7 @@ class _pinCodeScreenState extends State<pinCodeScreen> {
                     height: 5,
                   ),
                   Text(
-                    '+9989912121212',
+                    widget.phoneNumber,
                     style: TextStyle(
                         color: '347AE2'.toColor(),
                         fontWeight: FontWeight.w500,
@@ -122,7 +132,9 @@ class _pinCodeScreenState extends State<pinCodeScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const phoneVerifScreen(),
+                            ));
                           },
                           child: const Text(
                             "Raqamni o'zgartirish",
@@ -132,13 +144,29 @@ class _pinCodeScreenState extends State<pinCodeScreen> {
                                 fontFamily: 'OpenSans'),
                           ),
                         ),
-                        Text(
-                          "Qayta jo'natish",
-                          style: TextStyle(
-                              color: '347AE2'.toColor(),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400),
-                        )
+                        CountdownTimer(
+                          controller: controller,
+                          widgetBuilder: (context, time) {
+                            if (time == null) {
+                              return GestureDetector(
+                                  onTap: () async {
+                                    setState(() {});
+                                    await phoneVerifFunc(
+                                        widget.phoneNumber, context);
+                                  },
+                                  child: Text(
+                                    "Qayta jo'natish",
+                                    style: TextStyle(
+                                        color: '347AE2'.toColor(),
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400),
+                                  ));
+                            }
+                            return Text(
+                                '0${time.min ?? '0'}:${time.sec! < 10 ? '0${time.sec}' : '${time.sec}'}');
+                          },
+                          endTime: endTime,
+                        ),
                       ],
                     ),
                   ),
@@ -146,10 +174,22 @@ class _pinCodeScreenState extends State<pinCodeScreen> {
                     height: 80,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const registerScreenWphone(),
-                      ));
+                    onTap: () async {
+                      Response response = await phonePinVerifFunc(
+                          widget.phoneNumber.substring(1), smsController.text);
+
+                      if (response.statusCode == 200) {
+                        final token = tokenModelFromJson(response.body);
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                registerScreenWphone(userToken: token.token),
+                          ),
+                          (route) => false,
+                        );
+                      } else {
+                        smsValidator(context, 'SMS kod xato');
+                      }
                     },
                     child: Container(
                       height: 56,

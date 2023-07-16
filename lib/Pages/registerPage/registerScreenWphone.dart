@@ -5,7 +5,8 @@ import 'package:tutorchat/Pages/registerPage/registerUserDataWphone.dart';
 import 'package:tutorchat/extentions.dart';
 
 class registerScreenWphone extends StatefulWidget {
-  const registerScreenWphone({super.key});
+  final userToken;
+  const registerScreenWphone({super.key, required this.userToken});
 
   @override
   State<registerScreenWphone> createState() => _registerScreenWphoneState();

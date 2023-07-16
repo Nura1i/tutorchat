@@ -55,7 +55,43 @@ class Network {
     return response;
   }
 
+  static Future<http.Response> sendPhone(String phone) async {
+    final url = Uri.parse('https://api.tutorchat.uz/api/sms/public/sendSms');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode({
+      'phone': phone,
+    });
+    final response = await http.post(url, headers: headers, body: body);
+    return response;
+  }
+
+  static Future<http.Response> checkPhonePin(
+      String phone, String phoneCode) async {
+    final url = Uri.parse(
+        'https://api.tutorchat.uz/api/sms/public/verification_sms_code?phone=%2B$phone&smsCode=$phoneCode');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode({
+      'phone': phone,
+      'smsCode': phoneCode,
+    });
+    final response = await http.post(url, headers: headers, body: body);
+    return response;
+  }
+
   static Future<http.Response> checkEmailPin(
+      String email, String emailCode) async {
+    final url = Uri.parse(
+        'https://api.tutorchat.uz/api/email/public/verification_email?email=$email&emailCode=$emailCode');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode({
+      'email': email,
+      'emailCode': emailCode,
+    });
+    final response = await http.post(url, headers: headers, body: body);
+    return response;
+  }
+
+  static Future<http.Response> registrWithEmailPost(
       String email, String emailCode) async {
     final url = Uri.parse(
         'https://api.tutorchat.uz/api/email/public/verification_email?email=$email&emailCode=$emailCode');
