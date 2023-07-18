@@ -11,9 +11,11 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
+//waka_cf9761a5-8e55-40f9-83d7-89d65417d08b
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController? searchtextEditingController = TextEditingController();
+  int informations = 23;
+  int sendcounter = 223;
   @override
   void initState() {
     searchtextEditingController = TextEditingController();
@@ -52,20 +54,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Row(
-                        children: const [
+                       Row(
+                        children: [
                           Padding(
                             padding: EdgeInsets.only(right: 25.0),
                             child: SizedBox(
                               width: 24,
                               height: 29,
-                              child: Badge(
+                              child:
+
+                              Badge(
                                   largeSize: 15,
                                   smallSize: 15,
                                   alignment: AlignmentDirectional.center,
-//                                  offset: Offset(5, -7),
+                                  offset: Offset(6, -8),
                                   label: Text(
-                                    '2',
+                                    informations.toString(),
+                                    maxLines: 1,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'OpenSans',
@@ -86,9 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   largeSize: 15,
                                   smallSize: 15,
                                   alignment: AlignmentDirectional.center,
-                                  //offset: Offset(5, -7),
+                                  offset: Offset(5, -7),
                                   label: Text(
-                                    '122',
+                                    sendcounter.toString(),
+                                    maxLines: 1,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'OpenSans',
@@ -182,11 +188,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: 5,
                       itemBuilder: (_, index) {
                         return postsubjects(
+                            username: 'Izabella Karl 16',
+                            userimage: 'assets/png/userpicture.png',
                             imagename: 'assets/png/math.png',
                             coursename: 'Matematika Bo`yicha Video Kurs(Lar)',
                             commentcount: 50,
-                            locksubject: true,
-                            ratingcounter: 3);
+                            locksubject: index==2 ? false : true,
+                            ratingcounter: 3,
+                            newcostcourse: 435,
+                            oldcostcourse: 640);
                       }),
                 ),
               ),
