@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 
-import 'package:tutorchat/splash.dart';
+import 'package:tutorchat/Pages/languagePage/languageScreen.dart';
+import 'package:tutorchat/controllerPage/controllerPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyCustomSplashScreen(),
+      home: ControllerPage(),
     );
   }
 }
