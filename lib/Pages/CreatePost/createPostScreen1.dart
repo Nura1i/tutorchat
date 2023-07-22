@@ -20,7 +20,6 @@ class _CreatePost1State extends State<CreatePost1> {
           backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(onPressed: (){
-
           }, icon: const Icon(Icons.keyboard_backspace, color: Color(0xff130F26),size: 24,),),
           centerTitle: true,
           title: const Text('Post yaratish', style: TextStyle(fontFamily: 'Poppins', fontSize: 22,fontWeight: FontWeight.w500,color: Colors.black),),
@@ -28,8 +27,8 @@ class _CreatePost1State extends State<CreatePost1> {
         body:   SingleChildScrollView(
           child: Stack(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 18.0, right: 18.0),
+               Padding(
+                padding: EdgeInsets.only(left: 18.0, right: 18.0, top: 100),
                 child: Column(
                   children: [
                    TextField(
@@ -44,31 +43,34 @@ class _CreatePost1State extends State<CreatePost1> {
                           hintStyle: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.w500,fontSize: 15, fontFamily: 'Inter')
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 10,),
-                            Text('img upload', style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.w500,fontSize: 15, fontFamily: 'Inter'),),
-                            SizedBox(height: 10,),
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 4.0),
-                              child: Text('word, ppt, exel, png, svg, jpeg, video ',style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.w500,fontSize: 9, fontFamily: 'Inter'),),
-                            ),
-                          ],
-                        ),
-                        Image(image: AssetImage('icon/imgupload.png'),width: 15,height: 14,),
-                      ],
+                    InkWell(
+                      onTap: (){},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 10,),
+                              Text('img upload', style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.w500,fontSize: 15, fontFamily: 'Inter'),),
+                              SizedBox(height: 10,),
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 4.0),
+                                child: Text('word, ppt, exel, png, svg, jpeg, video ',style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.w500,fontSize: 9, fontFamily: 'Inter'),),
+                              ),
+                            ],
+                          ),
+                          Image(image: AssetImage('icon/imgupload.png'),width: 15,height: 14,),
+                        ],
+                      ),
                     ),
-                    Divider(height: 0,thickness: 2,)
+                    Divider(height: 0,thickness: 1, color: Color(0xffB3B3B3),)
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 289.0, left: 21,right: 21),
+                padding: const EdgeInsets.only(top: 389.0, left: 21,right: 21),
                 child: TextButton(onPressed: (){}, child: Container(
                     width: 388,
                     height: 56,
@@ -76,7 +78,7 @@ class _CreatePost1State extends State<CreatePost1> {
                     child: Center(child: Text('To`plamga biriktirish',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 20, fontFamily: 'Inter'),)))),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 359.0, left: 21,right: 21),
+                padding: const EdgeInsets.only(top: 459.0, left: 21,right: 21),
                 child: TextButton(onPressed: (){}, child: Container(
                     width: 388,
                     height: 56,
