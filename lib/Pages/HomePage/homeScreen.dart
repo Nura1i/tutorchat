@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:tutorchat/Pages/CreatePost/createPostScreen1.dart';
 import 'package:tutorchat/extentions.dart';
-import 'package:tutorchat/models/item.dart';
 
+import '../../models/item.dart';
 import '../../widgets/widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,414 +10,181 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController? searchtextEditingController = TextEditingController();
-  int informations = 23;
+  int informations = 13;
   int sendcounter = 223;
-
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child:SingleChildScrollView(
-        child: Stack(
-        children: [
-        SizedBox(
-        width: MediaQuery.of(context).size.width,
-    child: Padding(
-    padding: const EdgeInsets.only(top: 49.0),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-    Padding(
-    padding: const EdgeInsets.only(left: 27.0),
-    child: Text(
-    'Tutor Chat',
-    style: TextStyle(
-    fontSize: 25,
-    color: '#000000'.toColor(),
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.w600),
-    ),
-    ),
-    Row(
-    children: [
-    Padding(
-    padding: EdgeInsets.only(right: 25.0),
-    child: SizedBox(
-    width: 24,
-    height: 29,
-    child:
-
-    Badge(
-    largeSize: 15,
-    smallSize: 15,
-    alignment: AlignmentDirectional.center,
-    offset: Offset(6, -8),
-    label: Text(
-    informations.toString(),
-    maxLines: 1,
-    style: TextStyle(
-    color: Colors.white,
-    fontFamily: 'OpenSans',
-    fontWeight: FontWeight.w400,
-    fontSize: 8),
-    ),
-    child: Image(
-    image: AssetImage('icon/bellicon.png'),
-    )),
-    ),
-    ),
-    Padding(
-    padding: EdgeInsets.only(right: 20.0),
-    child: SizedBox(
-    width: 28,
-    height: 28,
-    child: Badge(
-    largeSize: 15,
-    smallSize: 15,
-    alignment: AlignmentDirectional.center,
-    offset: Offset(5, -7),
-    label: Text(
-    sendcounter.toString(),
-    maxLines: 1,
-    style: TextStyle(
-    color: Colors.white,
-    fontFamily: 'OpenSans',
-    fontWeight: FontWeight.w400,
-    fontSize: 8),
-    ),
-    child: Image(
-    image: AssetImage('icon/sendicon.png'),
-    )),
-    ),
-    ),
-    ],
-    ),
-    ],
-    ),
-    ),
-    ),
-    const Padding(
-    padding: EdgeInsets.only(top: 120.0, left: 21),
-    child: Text(
-    'Start Learning',
-    style: TextStyle(
-    fontSize: 26,
-    fontWeight: FontWeight.w500,
-    fontFamily: 'Poppins'),
-    ),
-    ),
-    Padding(
-    padding: const EdgeInsets.only(top: 170.0, left: 30, right: 30),
-    child: Container(
-    decoration: BoxDecoration(
-    boxShadow: [
-    BoxShadow(
-    color: Colors.grey.shade200,
-    offset: const Offset(6.0, 6.0),
-    blurRadius: 15,
-    spreadRadius: 1.0,
-    ),
-    const BoxShadow(
-    color: Colors.white,
-    offset: Offset(-6.0, -6.0),
-    blurRadius: 15,
-    spreadRadius: 1.0,
-    ),
-    ],
-    borderRadius: BorderRadius.circular(10),
-    color: const Color(0xffFFFFFF),
-    ),
-    child: Card(
-    elevation: 0.0,
-    shadowColor: Colors.black,
-    child: TextField(
-    controller: searchtextEditingController,
-    textInputAction: TextInputAction.search,
-    decoration: const InputDecoration(
-    border: InputBorder.none,
-    focusColor: Colors.blue,
-    prefixIcon: Icon(Icons.search),
-    hintText: 'what you want to learn?',
-    hintStyle: TextStyle(
-    fontFamily: 'Poppins', fontWeight: FontWeight.w500),
-    ),
-    ),
-    ),
-    ),
-    ),
-    Padding(
-    padding: const EdgeInsets.only(top: 243.0),
-    child: SizedBox(
-    height: 55,
-    width: double.infinity,
-    child: ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: fanslist.length,
-    itemBuilder: (_, index) {
-    return Padding(
-    padding: EdgeInsets.only(left: index == 0 ? 30.0 : 0),
-    child: fans(
-    fanslist[index].imagename, fanslist[index].name),
+    EdgeInsets paddingLeft = const EdgeInsets.only(left: 27);
+    return Scaffold(
+      body: Column(children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: paddingLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Tutor Chat',
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: '#000000'.toColor(),
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 25.0),
+                          child: SizedBox(
+                            width: 24,
+                            height: 29,
+                            child: Badge(
+                                backgroundColor: 'F8361B'.toColor(),
+                                label: Text(
+                                  informations.toString(),
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'OpenSans',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 8),
+                                ),
+                                child: const Image(
+                                  image: AssetImage('icon/bellicon.png'),
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 20.0),
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: Badge(
+                                backgroundColor: 'F8361B'.toColor(),
+                                //  alignment: const AlignmentDirectional(11, -7),
+                                label: Text(
+                                  sendcounter.toString(),
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'OpenSans',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 8),
+                                ),
+                                child: const Image(
+                                  image: AssetImage('icon/sendicon.png'),
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: paddingLeft,
+                child: const Text(
+                  'Start Learning',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: 'Poppins'),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 20, left: 27),
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade200,
+                        offset: const Offset(6.0, 6.0),
+                        blurRadius: 15,
+                        spreadRadius: 1.0,
+                      ),
+                      const BoxShadow(
+                        color: Colors.white,
+                        offset: Offset(-6.0, -6.0),
+                        blurRadius: 15,
+                        spreadRadius: 1.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xffFFFFFF),
+                  ),
+                  child: Card(
+                    elevation: 0.0,
+                    shadowColor: Colors.black,
+                    child: TextField(
+                      controller: searchtextEditingController,
+                      textInputAction: TextInputAction.search,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        focusColor: Colors.blue,
+                        prefixIcon: Icon(Icons.search),
+                        hintText: 'what you want to learn?',
+                        hintStyle: TextStyle(
+                            fontFamily: 'Poppins', fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: 55,
+                width: double.infinity,
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: fanslist.length,
+                    itemBuilder: (_, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(left: index == 0 ? 30.0 : 0),
+                        child: fans(
+                            fanslist[index].imagename, fanslist[index].name),
+                      );
+                    }),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              itemCount: 15,
+              itemBuilder: (_, index) {
+                return postsubjects(
+                    username: 'Username',
+                    userimage: 'assets/png/userpicture.png',
+                    imagename: 'assets/png/math.png',
+                    coursename: 'Matematika Bo`yicha Video Kurs(Lar)',
+                    commentcount: 50,
+                    locksubject: index == 2 ? false : true,
+                    ratingcounter: 3,
+                    newcostcourse: 435,
+                    oldcostcourse: 640);
+              }),
+        )
+      ]),
     );
-    }),
-    ),
-    ),
-    Padding(
-    padding: const EdgeInsets.only(top: 310.0),
-    child: SizedBox(
-    width: MediaQuery.of(context).size.width,
-    height: 500,
-    child: ListView.builder(
-    scrollDirection: Axis.vertical,
-    itemCount: 5,
-    itemBuilder: (_, index) {
-    return postsubjects(
-    username: 'Izabella Karl 16',
-    userimage: 'assets/png/userpicture.png',
-    imagename: 'assets/png/math.png',
-    coursename: 'Matematika Bo`yicha Video Kurs(Lar)',
-    commentcount: 50,
-    locksubject: index==2 ? false : true,
-    ratingcounter: 3,
-    newcostcourse: 435,
-    oldcostcourse: 640);
-    }),
-    ),
-    ),
-    ],
-    ),
-    ));
-      // Scaffold(
-      //   backgroundColor: Colors.white,
-      //   body: meanHome,
-      //   bottomNavigationBar: BottomNavigationBar(
-      //     currentIndex: 0,
-      //       onTap: (index){
-      //       setState(() {
-      //         switch(index){
-      //           case 0 :{
-      //             // HomePagedagi asosiy qismi.
-      //             meanHome = SingleChildScrollView(
-      //               child: Stack(
-      //                 children: [
-      //                   SizedBox(
-      //                     width: MediaQuery.of(context).size.width,
-      //                     child: Padding(
-      //                       padding: const EdgeInsets.only(top: 49.0),
-      //                       child: Row(
-      //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                         children: [
-      //                           Padding(
-      //                             padding: const EdgeInsets.only(left: 27.0),
-      //                             child: Text(
-      //                               'Tutor Chat',
-      //                               style: TextStyle(
-      //                                   fontSize: 25,
-      //                                   color: '#000000'.toColor(),
-      //                                   fontFamily: 'Poppins',
-      //                                   fontWeight: FontWeight.w600),
-      //                             ),
-      //                           ),
-      //                           Row(
-      //                             children: [
-      //                               Padding(
-      //                                 padding: EdgeInsets.only(right: 25.0),
-      //                                 child: SizedBox(
-      //                                   width: 24,
-      //                                   height: 29,
-      //                                   child:
-      //
-      //                                   Badge(
-      //                                       largeSize: 15,
-      //                                       smallSize: 15,
-      //                                       alignment: AlignmentDirectional.center,
-      //                                       offset: Offset(6, -8),
-      //                                       label: Text(
-      //                                         informations.toString(),
-      //                                         maxLines: 1,
-      //                                         style: TextStyle(
-      //                                             color: Colors.white,
-      //                                             fontFamily: 'OpenSans',
-      //                                             fontWeight: FontWeight.w400,
-      //                                             fontSize: 8),
-      //                                       ),
-      //                                       child: Image(
-      //                                         image: AssetImage('icon/bellicon.png'),
-      //                                       )),
-      //                                 ),
-      //                               ),
-      //                               Padding(
-      //                                 padding: EdgeInsets.only(right: 20.0),
-      //                                 child: SizedBox(
-      //                                   width: 28,
-      //                                   height: 28,
-      //                                   child: Badge(
-      //                                       largeSize: 15,
-      //                                       smallSize: 15,
-      //                                       alignment: AlignmentDirectional.center,
-      //                                       offset: Offset(5, -7),
-      //                                       label: Text(
-      //                                         sendcounter.toString(),
-      //                                         maxLines: 1,
-      //                                         style: TextStyle(
-      //                                             color: Colors.white,
-      //                                             fontFamily: 'OpenSans',
-      //                                             fontWeight: FontWeight.w400,
-      //                                             fontSize: 8),
-      //                                       ),
-      //                                       child: Image(
-      //                                         image: AssetImage('icon/sendicon.png'),
-      //                                       )),
-      //                                 ),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                         ],
-      //                       ),
-      //                     ),
-      //                   ),
-      //                   const Padding(
-      //                     padding: EdgeInsets.only(top: 120.0, left: 21),
-      //                     child: Text(
-      //                       'Start Learning',
-      //                       style: TextStyle(
-      //                           fontSize: 26,
-      //                           fontWeight: FontWeight.w500,
-      //                           fontFamily: 'Poppins'),
-      //                     ),
-      //                   ),
-      //                   Padding(
-      //                     padding: const EdgeInsets.only(top: 170.0, left: 30, right: 30),
-      //                     child: Container(
-      //                       decoration: BoxDecoration(
-      //                         boxShadow: [
-      //                           BoxShadow(
-      //                             color: Colors.grey.shade200,
-      //                             offset: const Offset(6.0, 6.0),
-      //                             blurRadius: 15,
-      //                             spreadRadius: 1.0,
-      //                           ),
-      //                           const BoxShadow(
-      //                             color: Colors.white,
-      //                             offset: Offset(-6.0, -6.0),
-      //                             blurRadius: 15,
-      //                             spreadRadius: 1.0,
-      //                           ),
-      //                         ],
-      //                         borderRadius: BorderRadius.circular(10),
-      //                         color: const Color(0xffFFFFFF),
-      //                       ),
-      //                       child: Card(
-      //                         elevation: 0.0,
-      //                         shadowColor: Colors.black,
-      //                         child: TextField(
-      //                           controller: searchtextEditingController,
-      //                           textInputAction: TextInputAction.search,
-      //                           decoration: const InputDecoration(
-      //                             border: InputBorder.none,
-      //                             focusColor: Colors.blue,
-      //                             prefixIcon: Icon(Icons.search),
-      //                             hintText: 'what you want to learn?',
-      //                             hintStyle: TextStyle(
-      //                                 fontFamily: 'Poppins', fontWeight: FontWeight.w500),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                   Padding(
-      //                     padding: const EdgeInsets.only(top: 243.0),
-      //                     child: SizedBox(
-      //                       height: 55,
-      //                       width: double.infinity,
-      //                       child: ListView.builder(
-      //                           scrollDirection: Axis.horizontal,
-      //                           itemCount: fanslist.length,
-      //                           itemBuilder: (_, index) {
-      //                             return Padding(
-      //                               padding: EdgeInsets.only(left: index == 0 ? 30.0 : 0),
-      //                               child: fans(
-      //                                   fanslist[index].imagename, fanslist[index].name),
-      //                             );
-      //                           }),
-      //                     ),
-      //                   ),
-      //                   Padding(
-      //                     padding: const EdgeInsets.only(top: 310.0),
-      //                     child: SizedBox(
-      //                       width: MediaQuery.of(context).size.width,
-      //                       height: 500,
-      //                       child: ListView.builder(
-      //                           scrollDirection: Axis.vertical,
-      //                           itemCount: 5,
-      //                           itemBuilder: (_, index) {
-      //                             return postsubjects(
-      //                                 username: 'Izabella Karl 16',
-      //                                 userimage: 'assets/png/userpicture.png',
-      //                                 imagename: 'assets/png/math.png',
-      //                                 coursename: 'Matematika Bo`yicha Video Kurs(Lar)',
-      //                                 commentcount: 50,
-      //                                 locksubject: index==2 ? false : true,
-      //                                 ratingcounter: 3,
-      //                                 newcostcourse: 435,
-      //                                 oldcostcourse: 640);
-      //                           }),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             );
-      //             break;
-      //           }
-      //           case 1 :{
-      //             break;
-      //           }
-      //           case 2 : {
-      //             meanHome = CreatePost1();
-      //             break;
-      //           }
-      //           case 3 : {
-      //             break;
-      //           }
-      //         }
-      //
-      //       });
-      //       },
-      //       items: const [
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.home,
-      //           color: Colors.black,
-      //         ),
-      //         label: 'Home'),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.search,
-      //           color: Colors.black,
-      //         ),
-      //         label: 'Search'),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.add_box_outlined,
-      //           color: Colors.black,
-      //         ),
-      //         label: 'Add Post'),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.star_border,
-      //           color: Colors.black,
-      //         ),
-      //         label: 'Star'),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(
-      //           Icons.account_circle_outlined,
-      //           color: Colors.black,
-      //         ),
-      //         label: 'Account'),
-      //   ]),
-      // ),
-    // );
   }
 }

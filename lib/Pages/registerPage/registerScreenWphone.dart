@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tutorchat/Pages/mailVerifPage/mailVerifScreen.dart';
 import 'package:tutorchat/Pages/registerPage/components.dart';
 import 'package:tutorchat/Pages/registerPage/registerUserDataWphone.dart';
 import 'package:tutorchat/extentions.dart';
+import 'package:tutorchat/widgets/sms_validator.dart';
 
 class registerScreenWphone extends StatefulWidget {
   final userToken;
@@ -14,7 +14,7 @@ class registerScreenWphone extends StatefulWidget {
 
 class _registerScreenWphoneState extends State<registerScreenWphone> {
   TextEditingController usernameController = TextEditingController();
-
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
   @override
@@ -73,6 +73,10 @@ class _registerScreenWphoneState extends State<registerScreenWphone> {
                 const SizedBox(
                   height: 20,
                 ),
+                form(emailController, 'Email'),
+                const SizedBox(
+                  height: 20,
+                ),
                 form(passwordController, 'Create password'),
                 const SizedBox(
                   height: 20,
@@ -83,14 +87,18 @@ class _registerScreenWphoneState extends State<registerScreenWphone> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => registerUserDataWphoneScreen(
-                        email: emailController.text,
-                        username: usernameController.text,
-                        confirmPassword: confirmController.text,
-                        password: passwordController.text,
-                      ),
-                    ));
+                    if (confirmController.text == passwordController.text) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => registerUserDataWphoneScreen(
+                          username: usernameController.text,
+                          email: emailController.text,
+                          confirmPassword: confirmController.text,
+                          password: passwordController.text,
+                        ),
+                      ));
+                    } else {
+                      smsValidator(context, 'Password is not equal');
+                    }
                   },
                   child: Container(
                     height: 56,

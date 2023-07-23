@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tutorchat/Pages/PhoneVerificationPage/phoneVerifScreen.dart';
 import 'package:tutorchat/Pages/PhoneVerificationPage/responses.dart';
+import 'package:tutorchat/const.dart';
 import 'package:tutorchat/extentions.dart';
 import 'package:tutorchat/widgets/sms_validator.dart';
 
@@ -180,6 +181,7 @@ class _pinCodeScreenState extends State<pinCodeScreen> {
 
                       if (response.statusCode == 200) {
                         final token = tokenModelFromJson(response.body);
+                        userToken = token.token;
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (context) =>

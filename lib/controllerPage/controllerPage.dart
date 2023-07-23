@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 import 'package:tutorchat/Pages/SearchPage/searchpage.dart';
 
 import '../Pages/CreatePost/createPostScreen1.dart';
-
 
 class ControllerPage extends StatefulWidget {
   const ControllerPage({Key? key}) : super(key: key);
@@ -14,34 +12,39 @@ class ControllerPage extends StatefulWidget {
 }
 
 class _ControllerPageState extends State<ControllerPage> {
-  Widget? meanHome = HomeScreen();
+  Widget? meanHome = const HomeScreen();
 
-  void controllerPage(int index){
+  void controllerPage(int index) {
     setState(() {
-      switch(index){
-        case 0 :{
-          // HomePagedagi asosiy qismi.
-           meanHome = HomeScreen();
-          break;
-        }
-        case 1 :{
-          meanHome = SearchPage();
-          break;
-        }
-        case 2 : {
-          meanHome =  CreatePost1();
-          break;
-        }
-        case 3 : {
-          break;
-        }
-        case 4 : {
-          break;
-        }
+      switch (index) {
+        case 0:
+          {
+            // HomePagedagi asosiy qismi.
+            meanHome = const HomeScreen();
+            break;
+          }
+        case 1:
+          {
+            meanHome = const SearchPage();
+            break;
+          }
+        case 2:
+          {
+            meanHome = const CreatePost1();
+            break;
+          }
+        case 3:
+          {
+            break;
+          }
+        case 4:
+          {
+            break;
+          }
       }
-
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,7 +53,7 @@ class _ControllerPageState extends State<ControllerPage> {
         body: meanHome,
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: 0,
-            onTap: (index){
+            onTap: (index) {
               controllerPage(index);
             },
             items: const [

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/registerPage/components.dart';
@@ -32,6 +34,12 @@ class _registerUserDataScreenState extends State<registerUserDataWphoneScreen> {
   String? selectedSpeciality;
   String? selectedGender;
   Icon icon = const Icon(Icons.keyboard_arrow_down_sharp);
+  var photo;
+  _update() {
+    setState(() {
+      log('message');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +56,26 @@ class _registerUserDataScreenState extends State<registerUserDataWphoneScreen> {
               const SizedBox(
                 height: 70,
               ),
-              Center(
-                child: Image.asset(
-                  'assets/png/setPhoto.png',
-                  width: 90,
-                  height: 90,
+              GestureDetector(
+                onTap: () async {
+                  await displayBottomSheet(context, _update);
+                },
+                child: Center(
+                  child: imagge == null
+                      ? Image.asset(
+                          'assets/png/setPhoto.png',
+                          width: 90,
+                          height: 90,
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.file(
+                            height: 90,
+                            width: 90,
+                            imagge!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(
@@ -230,11 +253,7 @@ class _registerUserDataScreenState extends State<registerUserDataWphoneScreen> {
                 height: 20,
               ),
               GestureDetector(
-                onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const registerUserDataWphoneScreen(),
-                  // ));
-                },
+                onTap: () {},
                 child: Container(
                   height: 56,
                   alignment: Alignment.center,

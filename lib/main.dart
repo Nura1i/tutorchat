@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 
-import 'package:tutorchat/Pages/languagePage/languageScreen.dart';
-import 'package:tutorchat/controllerPage/controllerPage.dart';
+import 'Pages/registerPage/registerScreenWphone.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ControllerPage(),
+      home: const registerScreenWphone(userToken: ''),
     );
   }
 }
