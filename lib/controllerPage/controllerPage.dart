@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
-import 'package:tutorchat/Pages/SearchPage/searchpage.dart';
+import 'package:tutorchat/Pages/SearchPage/searchScreen.dart';
 
 import '../Pages/CreatePost/createPostScreen1.dart';
 
@@ -25,7 +26,7 @@ class _ControllerPageState extends State<ControllerPage> {
           }
         case 1:
           {
-            meanHome = const SearchPage();
+            meanHome = const SearchScreen();
             break;
           }
         case 2:
@@ -52,6 +53,8 @@ class _ControllerPageState extends State<ControllerPage> {
         backgroundColor: Colors.white,
         body: meanHome,
         bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.white,
             currentIndex: 0,
             onTap: (index) {
               controllerPage(index);

@@ -41,7 +41,7 @@ class _CreatePost1State extends State<CreatePost1> {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18.0),
+              padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 100),
               child: Column(
                 children: [
                   const TextField(
@@ -62,56 +62,60 @@ class _CreatePost1State extends State<CreatePost1> {
                             fontSize: 15,
                             fontFamily: 'Inter')),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'img upload',
-                            style: TextStyle(
-                                color: Color(0xff757575),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15,
-                                fontFamily: 'Inter'),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 4.0),
-                            child: Text(
-                              'word, ppt, exel, png, svg, jpeg, video ',
+                  InkWell(
+                    onTap: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'img upload',
                               style: TextStyle(
                                   color: Color(0xff757575),
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 9,
+                                  fontSize: 15,
                                   fontFamily: 'Inter'),
                             ),
-                          ),
-                        ],
-                      ),
-                      const Image(
-                        image: AssetImage('icon/imgupload.png'),
-                        width: 15,
-                        height: 14,
-                      ),
-                    ],
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 4.0),
+                              child: Text(
+                                'word, ppt, exel, png, svg, jpeg, video ',
+                                style: TextStyle(
+                                    color: Color(0xff757575),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 9,
+                                    fontFamily: 'Inter'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Image(
+                          image: AssetImage('icon/imgupload.png'),
+                          width: 15,
+                          height: 14,
+                        ),
+                      ],
+                    ),
                   ),
                   const Divider(
                     height: 0,
-                    thickness: 2,
+                    thickness: 1,
+                    color: Color(0xffB3B3B3),
                   )
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 289.0, left: 21, right: 21),
+              padding: const EdgeInsets.only(top: 389.0, left: 21, right: 21),
               child: TextButton(
                   onPressed: () {},
                   child: Container(
@@ -129,7 +133,7 @@ class _CreatePost1State extends State<CreatePost1> {
                       )))),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 359.0, left: 21, right: 21),
+              padding: const EdgeInsets.only(top: 459.0, left: 21, right: 21),
               child: TextButton(
                   onPressed: () {},
                   child: Container(
