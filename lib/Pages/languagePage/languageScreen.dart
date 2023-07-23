@@ -7,8 +7,9 @@ import 'package:tutorchat/widgets/sms_validator.dart';
 import '../LoginPage/loginPageScreen.dart';
 
 class LanguageScreen extends StatefulWidget {
-  const LanguageScreen({super.key, required this.title});
-  final String title;
+  const LanguageScreen({
+    super.key,
+  });
 
   @override
   State<LanguageScreen> createState() => _LanguageScreenState();
