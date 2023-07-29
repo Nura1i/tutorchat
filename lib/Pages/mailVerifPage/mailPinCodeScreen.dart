@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tutorchat/Pages/mailVerifPage/mailVerifScreen.dart';
 import 'package:tutorchat/Pages/mailVerifPage/responses.dart';
+import 'package:tutorchat/const.dart';
 import 'package:tutorchat/extentions.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:tutorchat/widgets/sms_validator.dart';
@@ -180,6 +181,7 @@ class _mailPinScreenState extends State<mailPinScreen> {
 
                       if (response.statusCode == 200) {
                         final token = tokenModelFromJson(response.body);
+                        userToken = token.token;
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
                               registerScreenWemail(userToken: token.token),

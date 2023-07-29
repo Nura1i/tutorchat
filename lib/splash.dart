@@ -54,10 +54,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
     Timer(const Duration(seconds: 4), () {
       setState(() {
         Navigator.pushReplacement(
-            context,
-            PageTransition(const LanguageScreen(
-              title: 'a',
-            )));
+            context, PageTransition(const LanguageScreen()));
       });
     });
   }

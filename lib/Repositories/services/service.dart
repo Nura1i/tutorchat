@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:tutorchat/const.dart';
 
 class Network {
   static String BASE = "api.tutorchat.uz";
@@ -93,9 +94,12 @@ class Network {
 
   static Future<http.Response> registrWithEmailPost(
       String email, String emailCode) async {
-    final url = Uri.parse(
-        'https://api.tutorchat.uz/api/email/public/verification_email?email=$email&emailCode=$emailCode');
-    final headers = {'Content-Type': 'application/json'};
+    final url =
+        Uri.parse('https://api.tutorchat.uz/api/auth/register_with_phone');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $userToken'
+    };
     final body = json.encode({
       'email': email,
       'emailCode': emailCode,

@@ -1,5 +1,9 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tutorchat/extentions.dart';
+import 'package:image_picker/image_picker.dart';
 
 Widget form(TextEditingController controller, String text) {
   return Stack(
@@ -129,4 +133,112 @@ customContainer(String text, TextEditingController controller) {
                   color: '969696'.toColor())),
         )),
   ]);
+}
+
+displayBottomSheet(BuildContext context, Function update) {
+  showModalBottomSheet(
+    context: context,
+    elevation: 10,
+    backgroundColor: Colors.grey,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(40),
+        topRight: Radius.circular(40),
+      ),
+    ),
+    builder: (ctx) {
+      return SizedBox(
+        height: MediaQuery.of(context).size.height * 0.08,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Icon Camera...!
+              IconButton(
+                  highlightColor: Colors.white,
+                  iconSize: 40,
+                  onPressed: () async {
+                    await pickImageFromCamer(ctx, update);
+                  },
+                  icon: const Icon(Icons.camera_alt)),
+              //SvgPicture.asset('assets/svg/camera.svg')),
+              const SizedBox(
+                width: 100,
+              ),
+              imagge != null
+                  ? IconButton(
+                      highlightColor: Colors.white,
+                      iconSize: 40,
+                      onPressed: () async {
+                        imagge = null;
+                        update();
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ))
+                  : const SizedBox(),
+              const SizedBox(
+                width: 100,
+              ),
+              // Icon  Galalery...!
+              IconButton(
+                  iconSize: 40,
+                  highlightColor: Colors.white,
+                  onPressed: () async {
+                    await pickImageFromGalery(ctx, update);
+                    update;
+                  },
+                  icon: const Icon(
+                    Icons.photo,
+                  )
+                  // icon: SvgPicture.asset(
+                  //   'assets/svg/gallery.svg',
+                  // ),
+                  ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+File? imagge;
+Future pickImageFromGalery(ctx, update) async {
+  try {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 60,
+    );
+    if (image == null) return;
+    final imageTemp = File(image.path);
+    imagge = imageTemp;
+    update();
+  } on Exception catch (e) {
+    log('Failed to pick image: $e');
+  }
+  log(imagge.toString());
+  Navigator.of(ctx).pop();
+  return imagge;
+}
+
+Future pickImageFromCamer(ctx, update) async {
+  try {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      imageQuality: 60,
+    );
+    if (image == null) return;
+    final imageTemp = File(image.path);
+    imagge = imageTemp;
+    update();
+  } on Exception catch (e) {
+    log('Failed to pick image: $e');
+  }
+  log(imagge.toString());
+  Navigator.of(ctx).pop();
+  return imagge;
 }
