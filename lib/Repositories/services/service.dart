@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:tutorchat/const.dart';
+import 'package:tutorchat/models/registerWphoneModel.dart';
 
 class Network {
   static String BASE = "api.tutorchat.uz";
@@ -106,6 +109,67 @@ class Network {
     });
     final response = await http.post(url, headers: headers, body: body);
     return response;
+  }
+
+  static Future<http.Response> registrWithPhonePost(
+      RegisterWphoneModel model) async {
+    final url =
+        Uri.parse('https://api.tutorchat.uz/api/auth/register_with_phone');
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $userToken'
+    };
+    final body = json.encode({
+      "imageId": model.imageId,
+      "username": model.username,
+      "email": model.email,
+      "password": model.password,
+      "confirmPassword": model.confirmPassword,
+      "fullName ": model.fullName,
+      "birth_date ": model.birthDate,
+      "address ": model.address,
+      "description": model.description,
+      "telegramLink": model.telegramLink,
+      "instagramLink": model.instagramLink,
+      "facebookLink": model.facebookLink,
+      "specialtyType": model.specialtyType,
+      "genderType": model.genderType
+    });
+    final response = await http.post(url, headers: headers, body: body);
+    return response;
+  }
+
+  static Future<void> uploadFile(File file) async {
+    var uri = Uri.parse('https://api.tutorchat.uz/api/attach/upload');
+    var request = http.MultipartRequest('POST', uri);
+
+    // Add headers to the request
+    request.headers.addAll({
+      'Authorization': 'Bearer $userToken',
+      'Content-Type': 'multipart/form-data',
+    });
+
+    var fileStream = http.ByteStream(file.openRead());
+    var fileLength = await file.length();
+
+    var multipartFile = http.MultipartFile(
+      'file',
+      fileStream,
+      fileLength,
+      filename: file.path.split('/').last,
+    );
+
+    request.files.add(multipartFile);
+
+    var response = await request.send();
+    var responseString = await response.stream.bytesToString();
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(responseString);
+      log('File uploaded: $responseData');
+    } else {
+      log('Error uploading file: $response');
+    }
   }
 
   static Map<String, String> paramsEmpty() {
