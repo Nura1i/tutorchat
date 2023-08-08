@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/AccountPage/accountScreen.dart';
 import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 import 'package:tutorchat/Pages/SearchPage/searchScreen.dart';
 
@@ -15,7 +16,7 @@ class ControllerPage extends StatefulWidget {
 
 class _ControllerPageState extends State<ControllerPage> {
   Widget? meanHome = HomeScreen();
-
+  int selectIndex = 0;
   void controllerPage(int index){
     setState(() {
       switch(index){
@@ -36,6 +37,7 @@ class _ControllerPageState extends State<ControllerPage> {
           break;
         }
         case 4 : {
+          meanHome = AccountScreen();
           break;
         }
       }
@@ -51,8 +53,11 @@ class _ControllerPageState extends State<ControllerPage> {
         bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Colors.black,
             unselectedItemColor: Colors.white,
-            currentIndex: 0,
+            currentIndex: selectIndex,
             onTap: (index){
+              setState(() {
+                selectIndex = index;
+              });
               controllerPage(index);
             },
             items: const [
