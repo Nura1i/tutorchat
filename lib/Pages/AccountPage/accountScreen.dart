@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tutorchat/extentions.dart';
 import 'package:tutorchat/widgets/textStyle.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -230,7 +229,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             Row(
               children: [
-
+               Container(child: Text('All', style: textStyle(FontWeight.w500, 13.13, Colors.black, 'Poppins'),),)
               ],
             ),
           ],
