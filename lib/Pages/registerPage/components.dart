@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Repositories/services/service.dart';
 import 'package:tutorchat/extentions.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -159,7 +160,7 @@ displayBottomSheet(BuildContext context, Function update) {
                   highlightColor: Colors.white,
                   iconSize: 40,
                   onPressed: () async {
-                    await pickImageFromCamer(ctx, update);
+                    await pickImageFromCamer(ctx, update, context);
                   },
                   icon: const Icon(Icons.camera_alt)),
               //SvgPicture.asset('assets/svg/camera.svg')),
@@ -188,7 +189,7 @@ displayBottomSheet(BuildContext context, Function update) {
                   iconSize: 40,
                   highlightColor: Colors.white,
                   onPressed: () async {
-                    await pickImageFromGalery(ctx, update);
+                    await pickImageFromGalery(ctx, update, context);
                     update;
                   },
                   icon: const Icon(
@@ -207,7 +208,7 @@ displayBottomSheet(BuildContext context, Function update) {
 }
 
 File? imagge;
-Future pickImageFromGalery(ctx, update) async {
+Future pickImageFromGalery(ctx, update, BuildContext context) async {
   try {
     final image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -216,16 +217,23 @@ Future pickImageFromGalery(ctx, update) async {
     if (image == null) return;
     final imageTemp = File(image.path);
     imagge = imageTemp;
+    await Network.uploadFile(imagge!);
     update();
   } on Exception catch (e) {
     log('Failed to pick image: $e');
   }
-  log(imagge.toString());
+
   Navigator.of(ctx).pop();
   return imagge;
 }
 
-Future pickImageFromCamer(ctx, update) async {
+Future pickImageFromCamer(ctx, update, BuildContext context) async {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return const Center(child: CircularProgressIndicator());
+    },
+  );
   try {
     final image = await ImagePicker().pickImage(
       source: ImageSource.camera,
@@ -234,11 +242,12 @@ Future pickImageFromCamer(ctx, update) async {
     if (image == null) return;
     final imageTemp = File(image.path);
     imagge = imageTemp;
+    final response = await Network.uploadFile(imagge!);
     update();
   } on Exception catch (e) {
     log('Failed to pick image: $e');
   }
-  log(imagge.toString());
+
   Navigator.of(ctx).pop();
   return imagge;
 }
