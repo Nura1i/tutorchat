@@ -5,7 +5,8 @@ import 'package:tutorchat/extentions.dart';
 import 'createPasswordScreen.dart';
 
 class repairPhoneScreen extends StatefulWidget {
-  const repairPhoneScreen({super.key});
+  final phoneNumber;
+  const repairPhoneScreen({super.key, required this.phoneNumber});
 
   @override
   State<repairPhoneScreen> createState() => _repairPhoneScreenState();
@@ -87,7 +88,7 @@ class _repairPhoneScreenState extends State<repairPhoneScreen> {
                     height: 5,
                   ),
                   Text(
-                    '+9989912121212',
+                    '${widget.phoneNumber}',
                     style: TextStyle(
                         color: '347AE2'.toColor(),
                         fontWeight: FontWeight.w500,

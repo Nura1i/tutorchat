@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:tutorchat/const.dart';
 import 'package:tutorchat/models/registerWphoneModel.dart';
 
+import '../../models/photoModel.dart';
+
 class Network {
   static String BASE = "api.tutorchat.uz";
   static Map<String, String> headers = {
@@ -111,35 +113,71 @@ class Network {
     return response;
   }
 
-  static Future<http.Response> registrWithPhonePost(
+  static Future<http.Response> registerWithPhonePost(
       RegisterWphoneModel model) async {
     final url =
         Uri.parse('https://api.tutorchat.uz/api/auth/register_with_phone');
+
     final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $userToken'
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer $userToken',
     };
-    final body = json.encode({
-      "imageId": model.imageId,
-      "username": model.username,
-      "email": model.email,
-      "password": model.password,
-      "confirmPassword": model.confirmPassword,
-      "fullName ": model.fullName,
-      "birth_date ": model.birthDate,
-      "address ": model.address,
-      "description": model.description,
-      "telegramLink": model.telegramLink,
-      "instagramLink": model.instagramLink,
-      "facebookLink": model.facebookLink,
-      "specialtyType": model.specialtyType,
-      "genderType": model.genderType
-    });
-    final response = await http.post(url, headers: headers, body: body);
+
+    final request = http.MultipartRequest('POST', url);
+    request.headers.addAll(headers);
+    request.fields['imageId'] = model.imageId;
+    request.fields['username'] = model.username;
+    request.fields['email'] = model.email;
+    request.fields['password'] = model.password;
+    request.fields['confirmPassword'] = model.confirmPassword;
+    request.fields['fullName'] = model.fullName;
+    request.fields['birth_date'] = '2023-08-06';
+    request.fields['address'] = model.address;
+    request.fields['description'] = model.description;
+    request.fields['telegramLink'] = model.telegramLink;
+    request.fields['instagramLink'] = model.instagramLink;
+    request.fields['facebookLink'] = model.facebookLink;
+    request.fields['specialtyType'] = model.specialtyType;
+    request.fields['genderType'] = model.genderType;
+    log(request.fields.toString());
+
+    final response = await http.Response.fromStream(await request.send());
+
     return response;
   }
 
-  static Future<void> uploadFile(File file) async {
+  static Future<http.Response> loginToSystem(
+      String username, String password) async {
+    var url =
+        Uri.parse('https://api.tutorchat.uz/api/login/public/login_to_system');
+
+    var headers = {
+      'accept': '*/*',
+      'Content-Type': 'application/json',
+    };
+
+    var body = {
+      'username': username,
+      'password': password,
+    };
+
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('Login successful!');
+      print(response.body);
+      // Handle the successful login response here
+    } else {
+      print('Login failed with status: ${response.statusCode}');
+    }
+    return response;
+  }
+
+  static Future uploadFile(File file) async {
     var uri = Uri.parse('https://api.tutorchat.uz/api/attach/upload');
     var request = http.MultipartRequest('POST', uri);
 
@@ -163,13 +201,17 @@ class Network {
 
     var response = await request.send();
     var responseString = await response.stream.bytesToString();
-
+    PhotoModel? idPhoto;
     if (response.statusCode == 200) {
       var responseData = jsonDecode(responseString);
-      log('File uploaded: $responseData');
+      idPhoto = PhotoModel.fromJson(responseData);
+      // log('File uploaded: $responseData');
+      log('idPhoto: ${idPhoto.id}');
+      PhotoId = idPhoto.id;
     } else {
       log('Error uploading file: $response');
     }
+    return idPhoto!.id;
   }
 
   static Map<String, String> paramsEmpty() {

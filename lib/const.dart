@@ -1,2 +1,3 @@
-String userToken =
-    'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrOTk4OTk4ODg4NTU4IiwicGhvbmUiOiIrOTk4OTk4ODg4NTU4IiwiaWF0IjoxNjg5ODU1MTUyLCJleHAiOjE2OTI0NDcxNTJ9.1e7bLiGBCFJBDcGd6mgDcFyS6W74Ww3J48m7AYgbf7WcBQIE6smqOdcelq__II7JL7wrdr-vGSLgZ7YJ0d3WRA';
+late final userToken;
+
+String? PhotoId;

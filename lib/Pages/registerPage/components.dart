@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tutorchat/Repositories/services/service.dart';
+import 'package:tutorchat/const.dart';
 import 'package:tutorchat/extentions.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,7 +18,44 @@ Widget form(TextEditingController controller, String text) {
           decoration: BoxDecoration(
             color: 'F5F5F5'.toColor(),
           ),
-          child: TextField(
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: text,
+                hintStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: '969696'.toColor())),
+          )),
+      const Positioned(
+          top: 0,
+          right: 0,
+          child: TriangleContainer(
+            color: Colors.grey,
+          ))
+    ],
+  );
+}
+
+Widget formValid(TextEditingController controller, String text, exep) {
+  return Stack(
+    children: [
+      Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          padding: const EdgeInsets.only(left: 10),
+          height: 56,
+          decoration: BoxDecoration(
+            color: 'F5F5F5'.toColor(),
+          ),
+          child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return exep;
+              }
+              return null;
+            },
             controller: controller,
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -173,7 +211,9 @@ displayBottomSheet(BuildContext context, Function update) {
                       iconSize: 40,
                       onPressed: () async {
                         imagge = null;
+
                         update();
+                        PhotoId = null;
                         Navigator.pop(context);
                       },
                       icon: const Icon(
@@ -209,6 +249,12 @@ displayBottomSheet(BuildContext context, Function update) {
 
 File? imagge;
 Future pickImageFromGalery(ctx, update, BuildContext context) async {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return const Center(child: CircularProgressIndicator());
+    },
+  );
   try {
     final image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -217,9 +263,13 @@ Future pickImageFromGalery(ctx, update, BuildContext context) async {
     if (image == null) return;
     final imageTemp = File(image.path);
     imagge = imageTemp;
-    await Network.uploadFile(imagge!);
+    final photoId = await Network.uploadFile(imagge!);
     update();
+    Navigator.pop(context);
   } on Exception catch (e) {
+    Navigator.pop(context);
+    imagge = null;
+    update();
     log('Failed to pick image: $e');
   }
 
@@ -242,9 +292,11 @@ Future pickImageFromCamer(ctx, update, BuildContext context) async {
     if (image == null) return;
     final imageTemp = File(image.path);
     imagge = imageTemp;
-    final response = await Network.uploadFile(imagge!);
+    final photoId = await Network.uploadFile(imagge!);
     update();
   } on Exception catch (e) {
+    imagge = null;
+    update();
     log('Failed to pick image: $e');
   }
 

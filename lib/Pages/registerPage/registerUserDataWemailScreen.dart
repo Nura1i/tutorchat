@@ -23,6 +23,7 @@ class registerUserDataWemailScreen extends StatefulWidget {
 }
 
 class _registerUserDataScreenState extends State<registerUserDataWemailScreen> {
+  final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController dataController = TextEditingController();
   TextEditingController adressController = TextEditingController();
@@ -34,6 +35,16 @@ class _registerUserDataScreenState extends State<registerUserDataWemailScreen> {
   String? selectedSpeciality;
   String? selectedGender;
   Icon icon = const Icon(Icons.keyboard_arrow_down_sharp);
+  String _validateEmail(String value) {
+    if (value.isEmpty) {
+      return 'Please enter your email address';
+    }
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +97,8 @@ class _registerUserDataScreenState extends State<registerUserDataWemailScreen> {
               const SizedBox(
                 height: 20,
               ),
-              form(nameController, 'F.I.SH'),
+              formValid(nameController, 'F.I.SH',
+                  _validateEmail(nameController.text)),
               const SizedBox(
                 height: 20,
               ),

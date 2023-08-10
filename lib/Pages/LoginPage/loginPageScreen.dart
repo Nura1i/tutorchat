@@ -1,8 +1,10 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/LoginPage/response.dart';
 import 'package:tutorchat/Pages/registerPage/components.dart';
 import 'package:tutorchat/Pages/repairPage/repairScreen.dart';
 import 'package:tutorchat/extentions.dart';
+import 'package:tutorchat/widgets/sms_validator.dart';
 
 import '../VerificationPage/verificationScreen.dart';
 
@@ -86,6 +88,7 @@ class _loginScreenState extends State<loginScreen> {
                   ),
                   child: TextField(
                     obscureText: !obscure,
+                    controller: paswordController,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         suffixIcon: GestureDetector(
@@ -162,14 +165,25 @@ class _loginScreenState extends State<loginScreen> {
               const SizedBox(
                 height: 50,
               ),
-              Container(
-                height: 56,
-                alignment: Alignment.center,
-                width: double.infinity,
-                decoration: BoxDecoration(color: '#9FC9EF'.toColor()),
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white, fontSize: 19),
+              GestureDetector(
+                onTap: () {
+                  if (usernameController.text.isNotEmpty &&
+                      paswordController.text.isNotEmpty) {
+                    loginFunc(usernameController.text, paswordController.text,
+                        context);
+                  } else {
+                    smsValidator(context, 'data is empty');
+                  }
+                },
+                child: Container(
+                  height: 56,
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: '#9FC9EF'.toColor()),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white, fontSize: 19),
+                  ),
                 ),
               ),
               const SizedBox(

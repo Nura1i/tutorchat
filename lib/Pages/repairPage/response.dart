@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:tutorchat/Pages/PhoneVerificationPage/pinCodeScreen.dart';
+import 'package:tutorchat/Pages/repairPage/repairPhoneScreen.dart';
 
 import '../../Repositories/services/service.dart';
 import '../../widgets/sms_validator.dart';
 
-phoneVerifFunc(String phoneNumber, context) async {
+phoneVerifRepairFunc(String phoneNumber, context) async {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -21,7 +21,7 @@ phoneVerifFunc(String phoneNumber, context) async {
       log('success sended sms');
       Navigator.pop(context);
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => pinCodeScreen(phoneNumber: phoneNumber),
+        builder: (context) => repairPhoneScreen(phoneNumber: phoneNumber),
       ));
     }
     if (response.statusCode == 400) {
@@ -31,16 +31,4 @@ phoneVerifFunc(String phoneNumber, context) async {
       throw Exception('Ошибка запроса: ${response.statusCode}');
     }
   } finally {}
-}
-
-phonePinVerifFunc(String phoneNumber, String pin) async {
-  final response = await Network.checkPhonePin(phoneNumber, pin);
-  if (response.statusCode == 200) {
-    log('success checked sms phone');
-    log(response.body.toString());
-  } else {
-    log(response.body.toString());
-    log('does not checked');
-  }
-  return response;
 }

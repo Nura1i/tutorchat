@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:tutorchat/Pages/repairPage/repairMailScreen.dart';
-import 'package:tutorchat/Pages/repairPage/repairPhoneScreen.dart';
+import 'package:tutorchat/Pages/repairPage/response.dart';
 import 'package:tutorchat/extentions.dart';
 
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+
+import '../../widgets/sms_validator.dart';
 
 class repairScreen extends StatefulWidget {
   const repairScreen({super.key});
@@ -267,9 +269,17 @@ class _repairScreenState extends State<repairScreen> {
                   GestureDetector(
                     onTap: () {
                       if (selectedType == 1) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const repairPhoneScreen(),
-                        ));
+                        if (phoneController.text.length == 9) {
+                          int? numb = int.tryParse(phoneController.text);
+                          if (numb is num) {
+                            phoneVerifRepairFunc(
+                                '+998${phoneController.text}', context);
+                          } else {
+                            smsValidator(context, 'not valid phoneNumber');
+                          }
+                        } else {
+                          smsValidator(context, 'not valid phoneNumber');
+                        }
                       } else {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const repairMailScreen(),
