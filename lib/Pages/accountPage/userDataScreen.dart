@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:tutorchat/Pages/AccountPage/profile.dart';
+import 'package:tutorchat/Pages/chatPage/chatScreen.dart';
 import 'package:tutorchat/extentions.dart';
 
 import '../../widgets/textStyle.dart';
@@ -151,12 +152,19 @@ class _UserDataScreenState extends State<UserDataScreen> {
                         mainAxisSpacing: 2.0,
                         crossAxisSpacing: 2.0,
                         children: posts
-                            .map((e) => Container(
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(e),
-                                          fit: BoxFit.fill)),
-                                ))
+                            .map((e) => InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  return ChatScreen();
+                                }));
+                              },
+                              child: Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(e),
+                                            fit: BoxFit.fill)),
+                                  ),
+                            ))
                             .toList(),
                       ))
                   .toList(),
