@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
-import 'package:tutorchat/extentions.dart';
+
+import '../createPostPage/createPostScreen2.dart';
 
 class CreatePost1 extends StatefulWidget {
   const CreatePost1({Key? key}) : super(key: key);
@@ -117,7 +116,11 @@ class _CreatePost1State extends State<CreatePost1> {
             Padding(
               padding: const EdgeInsets.only(top: 389.0, left: 21, right: 21),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_){
+                      return CreatePost2();
+                    }));
+                  },
                   child: Container(
                       width: 388,
                       height: 56,
