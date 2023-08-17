@@ -157,8 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (_, index) {
                       return Padding(
                         padding: EdgeInsets.only(left: index == 0 ? 30.0 : 0),
-                        child: fans(
-                            fanslist[index].imagename, fanslist[index].name),
+                        child: Fans(image :fanslist[index].imagename,text: fanslist[index].name),
                       );
                     }),
               ),
@@ -172,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
               physics: const BouncingScrollPhysics(),
               itemCount: 15,
               itemBuilder: (_, index) {
-                return postsubjects(
+                return PostSubjects(
                     username: 'Username',
                     userimage: 'assets/png/userpicture.png',
                     imagename: 'assets/png/math.png',
