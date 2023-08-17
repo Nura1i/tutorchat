@@ -3,7 +3,7 @@ import 'package:tutorchat/Pages/AccountPage/userDataScreen.dart';
 import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 import 'package:tutorchat/Pages/SearchPage/searchScreen.dart';
 
-import '../Pages/CreatePost/createPostScreen1.dart';
+import '../Pages/createPostPage/createPostScreen1.dart';
 
 class ControllerPage extends StatefulWidget {
   const ControllerPage({Key? key}) : super(key: key);
