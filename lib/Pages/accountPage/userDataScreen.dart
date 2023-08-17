@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:tutorchat/Pages/AccountPage/profile.dart';
 import 'package:tutorchat/Pages/chatPage/chatScreen.dart';
+import 'package:tutorchat/Pages/collectionPage/collectionScreen1.dart';
+import 'package:tutorchat/controllerPage/controllerPage.dart';
 import 'package:tutorchat/extentions.dart';
 
 import '../../widgets/textStyle.dart';
@@ -155,7 +157,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                             .map((e) => InkWell(
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (_){
-                                  return ChatScreen();
+                                  return CollectionScreen1();
                                 }));
                               },
                               child: Container(
