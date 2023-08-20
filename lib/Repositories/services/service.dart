@@ -36,7 +36,7 @@ class Network {
     return null;
   }
 
-  static Future<String?> GETUSERDATA(String api, String userToken) async {
+  static Future<http.Response> GETUSERDATA(String api, String userToken) async {
     Map<String, String> headersUser = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $userToken'
@@ -45,9 +45,11 @@ class Network {
     var response = await get(uri, headers: headersUser);
 
     if (response.statusCode == 200) {
-      return response.body;
+      log(response.body);
+      return response;
+    } else {
+      return response;
     }
-    return null;
   }
 
   static Future<http.Response> sendEmail(String email) async {

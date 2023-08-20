@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tutorchat/controllerPage/controllerPage.dart';
+import 'package:tutorchat/Pages/LoginPage/loginPageScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ControllerPage(),
+      home: const loginScreen(),
     );
   }
 }

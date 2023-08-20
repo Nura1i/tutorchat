@@ -2,20 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/AccountPage/userDataScreen.dart';
 import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 import 'package:tutorchat/Pages/SearchPage/searchScreen.dart';
+import 'package:tutorchat/models/profileModel.dart';
 
 import '../Pages/CreatePost/createPostScreen1.dart';
 
 class ControllerPage extends StatefulWidget {
-  const ControllerPage({Key? key}) : super(key: key);
+  final userToken;
+  const ControllerPage({Key? key, required this.userToken}) : super(key: key);
 
   @override
   State<ControllerPage> createState() => _ControllerPageState();
 }
 
 class _ControllerPageState extends State<ControllerPage> {
+  ProfileModel? profileData;
+  @override
+  //GET USER DATA FOR PORIFLE
+  void initState() {
+    // final response =
+    //     Network.GETUSERDATA('/api/profile/view_own_profile', widget.userToken);
+    // profileData = profileModelFromJson(response.body.toString());
+    super.initState();
+  }
+
   Widget? meanHome = const HomeScreen();
 
   void controllerPage(int index) {
+    profileData != null
+        ? const HomeScreen()
+        : const Center(
+            child: CircularProgressIndicator(),
+          );
     setState(() {
       switch (index) {
         case 0:
@@ -40,7 +57,16 @@ class _ControllerPageState extends State<ControllerPage> {
           }
         case 4:
           {
-            meanHome = const UserDataScreen();
+            meanHome = profileData != null
+                ? UserDataScreen(
+                    profileData: profileData!,
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(
+                      color: Color.fromARGB(255, 90, 113, 132),
+                    ),
+                  );
+
             break;
           }
       }

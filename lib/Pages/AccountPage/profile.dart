@@ -9,7 +9,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25, right: 10, top: 10, bottom: 10),
+      padding: const EdgeInsets.only(left: 15, right: 10, top: 10, bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -24,8 +24,10 @@ class ProfileScreen extends StatelessWidget {
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                 ),
-                child: const Image(
-                    image: AssetImage('assets/png/accountuserimage.png')),
+                child: GestureDetector(
+                  child: const Image(
+                      image: AssetImage('assets/png/accountuserimage.png')),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
