@@ -2,20 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/AccountPage/userDataScreen.dart';
 import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 import 'package:tutorchat/Pages/SearchPage/searchScreen.dart';
+import 'package:tutorchat/Pages/collectionPage/collectionScreen1.dart';
 
 import '../Pages/createPostPage/createPostScreen1.dart';
 
 
 
 class ControllerPage extends StatefulWidget {
-  const ControllerPage({Key? key}) : super(key: key);
+  ControllerPage({Key? key}) : super(key: key);
+
 
   @override
   State<ControllerPage> createState() => _ControllerPageState();
 }
 
 class _ControllerPageState extends State<ControllerPage> {
-  Widget? meanHome = const HomeScreen();
+  Widget meanHome = const HomeScreen();
+  @override
+  void initState(){
+    meanHome = const HomeScreen();
+    super.initState();
+  }
+
+
 
   void controllerPage(int index) {
     setState(() {
@@ -45,6 +54,9 @@ class _ControllerPageState extends State<ControllerPage> {
             meanHome = const UserDataScreen();
             break;
           }
+        // case 5:{
+        //   widget.meanHome = const CollectionScreen1();
+        // }
       }
     });
   }
