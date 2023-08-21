@@ -8,6 +8,7 @@ import 'package:tutorchat/controllerPage/controllerPage.dart';
 import 'package:tutorchat/extentions.dart';
 
 import '../../widgets/textStyle.dart';
+import '../collectionPage/collectionScreen0.dart';
 
 class UserDataScreen extends StatefulWidget {
   const UserDataScreen({super.key});
@@ -156,9 +157,9 @@ class _UserDataScreenState extends State<UserDataScreen> {
                         children: posts
                             .map((e) => InkWell(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_){
-                                  return CollectionScreen1();
-                                }));
+                               Navigator.push(context, MaterialPageRoute(builder: (_){
+                                 return CollectionScreen0();
+                               }));
                               },
                               child: Container(
                                     decoration: BoxDecoration(
