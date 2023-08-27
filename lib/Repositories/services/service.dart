@@ -36,10 +36,11 @@ class Network {
     return null;
   }
 
-  static Future<http.Response> GETUSERDATA(String api, String userToken) async {
+  static Future<http.Response> GETUSERDATA(
+      String api, String userTokenn) async {
     Map<String, String> headersUser = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $userToken'
+      'Authorization': 'Bearer $userTokenn'
     };
     var uri = Uri.https(BASE, api); // http or https
     var response = await get(uri, headers: headersUser);

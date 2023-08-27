@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:tutorchat/const.dart';
-import 'package:tutorchat/controllerPage/controllerPage.dart';
 import 'package:tutorchat/models/tokenModel.dart';
 import 'package:tutorchat/widgets/sms_validator.dart';
 
 import '../../Repositories/services/service.dart';
+import '../../controllerPage/response.dart';
 
 loginFunc(String username, String password, context) async {
   showDialog(
@@ -24,10 +24,7 @@ loginFunc(String username, String password, context) async {
       log(response.body.toString());
       userToken = userData.token;
       log('success sended sms');
-      Navigator.pop(context);
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => ControllerPage(userToken: userData.token),
-      ));
+      await getDataFunc(context, userToken);
     }
     if (response.statusCode == 400) {
       Navigator.pop(context);

@@ -5,15 +5,9 @@ import 'package:flutter/material.dart';
 import '../Repositories/services/service.dart';
 import '../models/profileModel.dart';
 import '../widgets/sms_validator.dart';
+import 'controllerPage.dart';
 
-getDataFunc(String username, String password, context, userTokenn) async {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return const Center(child: CircularProgressIndicator());
-    },
-  );
-
+getDataFunc(context, userTokenn) async {
   try {
     final response =
         await Network.GETUSERDATA('/api/profile/view_own_profile', userTokenn);
@@ -23,7 +17,10 @@ getDataFunc(String username, String password, context, userTokenn) async {
       log(response.body.toString());
 
       log('get data success');
-      Navigator.pop(context);
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ControllerPage(userData: userData),
+      ));
     }
     if (response.statusCode == 400) {
       Navigator.pop(context);

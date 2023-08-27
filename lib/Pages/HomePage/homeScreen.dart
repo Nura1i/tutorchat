@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(children: [
         Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -157,7 +157,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (_, index) {
                       return Padding(
                         padding: EdgeInsets.only(left: index == 0 ? 30.0 : 0),
-                        child: Fans(image :fanslist[index].imagename,text: fanslist[index].name),
+                        child: Fans(
+                            image: fanslist[index].imagename,
+                            text: fanslist[index].name),
                       );
                     }),
               ),

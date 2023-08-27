@@ -46,7 +46,7 @@ userRegistration(RegisterWphoneModel model, context) async {
       log('success registered');
       Navigator.pop(context);
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const ControllerPage(userToken: ""),
+        builder: (context) => const ControllerPage(userData: ""),
       ));
     } else {
       throw Exception('Ошибка запроса: ${response.statusCode}');
