@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/collectionPage/collectionDeleteScreen.dart';
+import 'package:tutorchat/Pages/collectionPage/collectionItem.dart';
+import 'package:tutorchat/Pages/collectionPage/collectionSearchScreen.dart';
+import 'package:tutorchat/Pages/likesPage/likeScreen.dart';
 
 class CollectionScreen1 extends StatefulWidget {
   const CollectionScreen1({Key? key}) : super(key: key);
@@ -8,6 +12,17 @@ class CollectionScreen1 extends StatefulWidget {
 }
 
 class _CollectionScreen1State extends State<CollectionScreen1> {
+  String selectdropdownitem = '';
+
+  String likeView(int likeCounter) {
+    if (likeCounter ~/ 1000 >= 1 && likeCounter ~/ 1000 < 1000) {
+      return '${likeCounter ~/ 1000}K+';
+    } else if (likeCounter ~/ 1000000 >= 1 && likeCounter ~/ 1000000 < 1000) {
+      return '${likeCounter ~/ 1000000}M+';
+    }
+    return '$likeCounter+';
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,13 +37,118 @@ class _CollectionScreen1State extends State<CollectionScreen1> {
               child: SizedBox(
                 width: 24,
                 height: 24,
-                child: IconButton(
-                  onPressed: () {},
+                child: PopupMenuButton(
+                  onSelected: (v) {
+                    switch (v) {
+                      case 'Video qo`shish':
+                        {
+                          break;
+                        }
+                      case 'Qidirish':
+                        {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return const CollectionSearchPage();
+                          }));
+                          break;
+                        }
+                      case 'O`chirish':
+                        {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return const CollectionDeletePage();
+                          }));
+                          break;
+                        }
+                      case 'Tahrirlash':
+                        {
+                          break;
+                        }
+                    }
+                  },
                   icon: const Icon(
                     Icons.more_vert,
-                    size: 24,
                     color: Colors.black,
                   ),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                        value: 'Video qo`shish',
+                        enabled: true,
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.add_circle_outline,
+                              color: Colors.black,
+                              size: 11,
+                            ),
+                            Text(
+                              'Video qo`shish',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 8.24,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                    PopupMenuItem(
+                        value: 'Qidirish',
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.search,
+                              color: Colors.black,
+                              size: 11,
+                            ),
+                            Text(
+                              'Qidirish',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 8.24,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                    PopupMenuItem(
+                        value: 'O`chirish',
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.delete,
+                              color: Colors.black,
+                              size: 11,
+                            ),
+                            Text(
+                              'O`chirish',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 8.24,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                    PopupMenuItem(
+                        value: 'Tahrirlash',
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.mode,
+                              color: Colors.black,
+                              size: 11,
+                            ),
+                            Text(
+                              'Tahrirlash',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 8.24,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        )),
+                  ],
                 ),
               ),
             )
@@ -39,7 +159,7 @@ class _CollectionScreen1State extends State<CollectionScreen1> {
             child: Column(
               children: const [
                 Text(
-                  'To`plam',
+                  'To`plamlar',
                   style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'Open Sans',
@@ -47,7 +167,7 @@ class _CollectionScreen1State extends State<CollectionScreen1> {
                       color: Colors.black),
                 ),
                 Text(
-                  'soni ${10}',
+                  ' To`plam ',
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 16,
@@ -77,137 +197,148 @@ class _CollectionScreen1State extends State<CollectionScreen1> {
           height: MediaQuery.of(context).size.height,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
-              itemCount: 10,
+              itemCount: collectionItem.length,
               itemBuilder: (_, index) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 9.0, left: 22, right: 22),
                   child: ListTile(
-                    leading: Padding(
-                      padding: const EdgeInsets.only(bottom: 3.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
-                        )),
-                        child: const Image(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/png/math.png'),
-                        ),
+                      leading: Container(
+                        width: 90,
+                        height: 83.24,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(
+                                alignment: Alignment.center,
+                                fit: BoxFit.cover,
+                                image:
+                                    AssetImage(collectionItem[index].image))),
                       ),
-                    ),
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              'Matematika',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontFamily: 'NotoSans'),
-                            ),
-                            Text(
-                              '${20} Videos ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color(0xff9A9A9A),
-                                  fontFamily: 'NotoSans'),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            Image(
-                              image: AssetImage('icon/video.png'),
-                              width: 10,
-                              height: 11.02,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                                child: Row(
-                              children: const [
-                                Image(
-                                  image: AssetImage('icon/likeicon.png'),
-                                  width: 24,
-                                  height: 24,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    '${784}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: Color(0xff468CE7),
-                                        fontFamily: 'Open Sans'),
-                                  ),
-                                )
-                              ],
-                            )),
-                            const Text(
-                              '${1}k+',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: Color(0xff9A9A9A),
-                                  fontFamily: 'Open Sans'),
-                            ),
-                            const Text(
-                              '${850}+',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: Color(0xff9A9A9A),
-                                  fontFamily: 'Open Sans'),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                                onTap: () {},
-                                child: const Image(
-                                  image: AssetImage('icon/diamondicon.png'),
-                                  width: 14,
-                                  height: 18.2,
-                                )),
-                            InkWell(
-                                onTap: () {},
-                                child: const Image(
-                                  image: AssetImage('icon/commenticon.png'),
-                                  width: 13,
-                                  height: 14.31,
-                                )),
-                          ],
-                        )
-                      ],
-                    ),
-                    trailing: Container(
-                        padding: const EdgeInsets.only(top: 30),
-                        alignment: Alignment.bottomRight,
-                        width: 10,
-                        height: 17.34,
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.black,
-                              size: 10,
-                            ))),
-                  ),
+                      title: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return const CollectionScreen1();
+                                  }));
+                                },
+                                child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    child: Text(
+                                      collectionItem[index].subjectname,
+                                      style: const TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 18,
+                                          color: Colors.black,
+                                          fontFamily: 'NotoSans'),
+                                    )),
+                              ),
+                              Text(
+                                '${collectionItem[index].videoscounter} Videos ',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: Color(0xff9A9A9A),
+                                    fontFamily: 'NotoSans'),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Image(
+                                image: AssetImage('icon/video.png'),
+                                width: 10,
+                                height: 11.02,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return const LikeScreen();
+                                    }));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      const Image(
+                                        image: AssetImage('icon/likeicon.png'),
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 4.0),
+                                        child: Text(
+                                          likeView(collectionItem[index]
+                                              .likecounter),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                              color: Color(0xff468CE7),
+                                              fontFamily: 'Open Sans'),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                              Text(
+                                likeView(collectionItem[index].likecounter),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: Color(0xff9A9A9A),
+                                    fontFamily: 'Open Sans'),
+                              ),
+                              Text(
+                                likeView(collectionItem[index].viewscounter),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: Color(0xff9A9A9A),
+                                    fontFamily: 'Open Sans'),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SizedBox(
+                                width: 14,
+                                height: 18.2,
+                              ),
+                              InkWell(
+                                  onTap: () {},
+                                  child: const Image(
+                                    image: AssetImage('icon/commenticon.png'),
+                                    width: 13,
+                                    height: 14.31,
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
+                      trailing: Container(
+                          padding: const EdgeInsets.only(top: 10),
+                          alignment: Alignment.bottomRight,
+                          width: 10,
+                          height: 17.34,
+                          child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.black,
+                                size: 15,
+                              )))),
                 );
               }),
         ),
