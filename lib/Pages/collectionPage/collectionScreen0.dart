@@ -162,9 +162,6 @@ class _CollectionScreen0State extends State<CollectionScreen0> {
                       children: [
                       InkWell(
                           onTap: (){
-                            setState(() {
-                              collectionItem[index].likecounter++;
-                            });
                           },
                           child: Row(
                         children: [
