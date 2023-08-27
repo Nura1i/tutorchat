@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/AccountPage/userDataScreen.dart';
 import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 import 'package:tutorchat/Pages/SearchPage/searchScreen.dart';
+import 'package:tutorchat/Pages/likesPage/likeScreen.dart';
 import 'package:tutorchat/models/profileModel.dart';
 
 import '../Pages/createPostPage/createPostScreen1.dart';
@@ -52,6 +53,7 @@ class _ControllerPageState extends State<ControllerPage> {
           }
         case 3:
           {
+            meanHome = const LikeScreen();
             break;
           }
         case 4:
