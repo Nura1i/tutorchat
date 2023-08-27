@@ -110,6 +110,9 @@ flutter:
     - family: Inter
       fonts:
         - asset: assets/fonts/Inter.ttf
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans.ttf
      #    style: Regular
   #   - family: Trajan Pro
   #     fonts:

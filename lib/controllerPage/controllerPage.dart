@@ -4,7 +4,9 @@ import 'package:tutorchat/Pages/HomePage/homeScreen.dart';
 import 'package:tutorchat/Pages/SearchPage/searchScreen.dart';
 import 'package:tutorchat/models/profileModel.dart';
 
-import '../Pages/CreatePost/createPostScreen1.dart';
+import '../Pages/createPostPage/createPostScreen1.dart';
+
+
 
 class ControllerPage extends StatefulWidget {
   final userToken;
