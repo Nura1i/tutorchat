@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/collectionPage/collectionDeleteScreen.dart';
 import 'package:tutorchat/Pages/collectionPage/collectionItem.dart';
 import 'package:tutorchat/Pages/collectionPage/collectionSearchScreen.dart';
+import 'package:tutorchat/Pages/likesPage/likeScreen.dart';
 
 class CollectionScreen1 extends StatefulWidget {
   const CollectionScreen1({Key? key}) : super(key: key);
@@ -181,7 +182,13 @@ class _CollectionScreen1State extends State<CollectionScreen1> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      InkWell(child: Row(
+                      InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (_){
+                              return LikeScreen();
+                            }));
+                          },
+                          child: Row(
                         children: [
                           Image(image: AssetImage('icon/likeicon.png'), width: 24,height: 24,),
                           Padding(
