@@ -33,11 +33,6 @@ class _LikeScreenState extends State<LikeScreen> {
             return Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (_){
-                    return MessageScreen();
-                  }));
-                },
                 child: ListTile(
                   leading:  Container(
                     height: 61.41,
