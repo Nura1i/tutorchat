@@ -116,6 +116,9 @@ flutter:
     - family: NotoSans
       fonts:
         - asset: assets/fonts/NotoSans.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto.ttf
      #    style: Regular
   #   - family: Trajan Pro
   #     fonts:
