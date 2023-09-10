@@ -7,12 +7,14 @@ import '../../models/profileModel.dart';
 import '../../widgets/textStyle.dart';
 import 'PortfolioPage/userPortfolioScreen.dart';
 import 'editeProfilePage/editeProfileScreen.dart';
-import 'folllowingPage/response.dart';
 import 'followersPage/followersScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final ProfileModel profileData;
-  const ProfileScreen({super.key, required this.profileData});
+  final followingLs;
+  //final List<UserFollowingListModel> userFollowing;
+  const ProfileScreen(
+      {super.key, required this.profileData, required this.followingLs});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -80,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               GestureDetector(
                 onTap: () async {
-                  await getUserFollowingListFunc();
+                  //   await getUserFollowingListFunc();
                   // Navigator.of(context).push(MaterialPageRoute(
                   //   builder: (context) => const FollowingSceen(),
                   // ));
