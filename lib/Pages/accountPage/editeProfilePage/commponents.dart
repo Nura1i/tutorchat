@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tutorchat/extentions.dart';
 
+import '../../../const.dart';
+
 alertForLinks(BuildContext context) {
+  TextEditingController tgLinkController =
+      TextEditingController(text: profileDataConst!.telegram);
+  TextEditingController inLinkController =
+      TextEditingController(text: profileDataConst!.instagram);
+  TextEditingController fkLinkController =
+      TextEditingController(text: profileDataConst!.facebook);
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -9,6 +17,7 @@ alertForLinks(BuildContext context) {
         title: Column(
           children: [
             TextField(
+              controller: tgLinkController,
               decoration: InputDecoration(
                 prefixIconConstraints:
                     const BoxConstraints(minWidth: 30, maxHeight: 20),
@@ -31,6 +40,7 @@ alertForLinks(BuildContext context) {
               thickness: 1,
             ),
             TextField(
+              controller: inLinkController,
               decoration: InputDecoration(
                   prefixIconConstraints:
                       const BoxConstraints(maxWidth: 30, maxHeight: 20),
@@ -53,6 +63,7 @@ alertForLinks(BuildContext context) {
               thickness: 1,
             ),
             TextField(
+              controller: fkLinkController,
               decoration: InputDecoration(
                   prefixIconConstraints:
                       const BoxConstraints(maxWidth: 30, maxHeight: 20),

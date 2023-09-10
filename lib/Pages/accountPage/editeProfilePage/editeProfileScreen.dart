@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/accountPage/editeProfilePage/commponents.dart';
 import 'package:tutorchat/extentions.dart';
 
+import '../../../const.dart';
+
 class EditeProfileScreen extends StatefulWidget {
   const EditeProfileScreen({super.key});
 
@@ -10,6 +12,13 @@ class EditeProfileScreen extends StatefulWidget {
 }
 
 class EditeProfileScreenState extends State<EditeProfileScreen> {
+  TextEditingController nameController =
+      TextEditingController(text: profileDataConst!.fullName);
+  TextEditingController usernameController =
+      TextEditingController(text: profileDataConst!.username);
+  TextEditingController desController =
+      TextEditingController(text: profileDataConst!.description);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +32,8 @@ class EditeProfileScreenState extends State<EditeProfileScreen> {
             },
             child: Icon(
               Icons.check,
-              color: '2B47FC'.toColor(),
-              size: 35,
+              color: '1877F2'.toColor(),
+              size: 33,
             ),
           ),
           const SizedBox(
@@ -38,10 +47,13 @@ class EditeProfileScreenState extends State<EditeProfileScreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const Icon(
-            Icons.cancel,
-            color: Colors.black,
-            size: 33,
+          child: Transform.rotate(
+            angle: 0.785398,
+            child: const Icon(
+              Icons.add,
+              color: Colors.black,
+              size: 40,
+            ),
           ),
         ),
         centerTitle: true,
@@ -59,11 +71,15 @@ class EditeProfileScreenState extends State<EditeProfileScreen> {
               height: 15,
             ),
             Center(
-              child: Container(
-                width: 85,
-                height: 85,
-                decoration: const BoxDecoration(
-                    color: Colors.grey, shape: BoxShape.circle),
+              child: SizedBox(
+                width: 90,
+                height: 90,
+                child: ClipOval(
+                  child: Image.memory(
+                    constUserPhoto!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
             const SizedBox(
@@ -85,6 +101,7 @@ class EditeProfileScreenState extends State<EditeProfileScreen> {
               thickness: 1,
             ),
             TextField(
+              controller: nameController,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Name',
@@ -98,6 +115,7 @@ class EditeProfileScreenState extends State<EditeProfileScreen> {
               thickness: 1,
             ),
             TextField(
+              controller: usernameController,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Username',
@@ -111,6 +129,7 @@ class EditeProfileScreenState extends State<EditeProfileScreen> {
               thickness: 1,
             ),
             TextField(
+              controller: desController,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Bio',

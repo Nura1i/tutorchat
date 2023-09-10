@@ -45,12 +45,7 @@ class Network {
     var uri = Uri.https(BASE, api); // http or https
     var response = await get(uri, headers: headersUser);
 
-    if (response.statusCode == 200) {
-      log(response.body);
-      return response;
-    } else {
-      return response;
-    }
+    return response;
   }
 
   static Future<http.Response> sendEmail(String email) async {
@@ -147,6 +142,53 @@ class Network {
     final response = await http.Response.fromStream(await request.send());
 
     return response;
+  }
+
+  Future<void> updateProfile(
+      String authToken, Map<String, dynamic> profileData) async {
+    final url = Uri.parse('https://api.tutorchat.uz/api/profile/edite_profile');
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $authToken',
+    };
+
+    final body = json.encode(profileData);
+
+    try {
+      final response = await http.put(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        print('Profile updated successfully');
+      } else {
+        print('Failed to update profile. Error: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Error occurred during the request
+      print('An error occurred: $error');
+    }
+  }
+
+  static Future<http.Response> searchUser(
+    String username,
+  ) async {
+    final url = Uri.parse(
+        'https://api.tutorchat.uz/api/profile/search_user?username=$username');
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $userToken',
+    };
+
+    final response = await http.get(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      log('User found: ${response.body}');
+      return response;
+    } else {
+      print('Failed to search user. Error: ${response.statusCode}');
+      return response;
+    }
   }
 
   static Future<http.Response> loginToSystem(

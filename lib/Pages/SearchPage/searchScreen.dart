@@ -1,5 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:tutorchat/Repositories/services/service.dart';
+import 'package:tutorchat/models/searchUserModel.dart';
 import 'package:tutorchat/widgets/usersearchwidget.dart';
+import 'package:http/http.dart' as http;
+
+import '../../const.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -41,6 +49,8 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
+  List<SerachUserData> listOfDatas = [];
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,32 +60,52 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 60.0, left: 30, right: 30),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    blurRadius: 10,
-                    color: Colors.grey.shade200,
-                    offset: const Offset(4, 4),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: Container(
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxShadow(
+                      blurRadius: 10,
+                      color: Colors.grey.shade200,
+                      offset: const Offset(4, 4),
+                    ),
+                    const BoxShadow(
+                      blurRadius: 10,
+                      color: Colors.white,
+                      offset: Offset(-5, -5),
+                    ),
+                  ]),
+                  child: TextField(
+                    controller: searchController,
+                    onChanged: (result) async {
+                      if (result.isNotEmpty) {
+                        Response response = await Network.searchUser(result);
+                        if (response.statusCode == 200) {
+                          setState(() {
+                            listOfDatas = serachUserDataFromJson(response.body);
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          listOfDatas = [];
+                        });
+                      }
+                    },
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          size: 15,
+                        ),
+                        hintText: 'username',
+                        hintStyle: TextStyle(
+                          color: Color(0xff9A9A9A),
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                        )),
                   ),
-                  const BoxShadow(
-                    blurRadius: 10,
-                    color: Colors.white,
-                    offset: Offset(-5, -5),
-                  ),
-                ]),
-                child: const TextField(
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Icon(
-                        Icons.search,
-                        size: 15,
-                      ),
-                      hintText: 'username',
-                      hintStyle: TextStyle(
-                        color: Color(0xff9A9A9A),
-                        fontFamily: 'Poppins',
-                        fontSize: 14,
-                      )),
                 ),
               ),
             ),
@@ -202,13 +232,33 @@ class _SearchScreenState extends State<SearchScreen> {
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: ListView.builder(
-                    itemCount: 35,
+                    itemCount: listOfDatas.length,
                     scrollDirection: Axis.vertical,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (_, index) {
-                      return UserSearchWidget(
-                        userimage: 'assets/png/userpicture.png',
-                        username: 'Jane Cooper',
+                      return FutureBuilder(
+                        future: getPhoto(listOfDatas[index].image),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: const AlwaysStoppedAnimation<Color>(
+                                    Colors.blue),
+                                backgroundColor: Colors.grey[200],
+                                value: null,
+                              ),
+                            );
+                          }
+                          if (snapshot.hasData) {}
+                          return UserSearchWidget(
+                            userId: listOfDatas[index].id,
+                            userimage: snapshot.data,
+                            name: listOfDatas[index].fullName,
+                            username: listOfDatas[index].userName,
+                          );
+                        },
                       );
                     }),
               ),
@@ -218,4 +268,16 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
     ));
   }
+}
+
+Future<Uint8List> getPhoto(imageId) async {
+  http.Response responsee = await http.get(
+    Uri.parse(imageId),
+    headers: {
+      'Content-Type': 'image/jpeg',
+      'Authorization': 'Bearer $userToken'
+    },
+  );
+
+  return responsee.bodyBytes;
 }

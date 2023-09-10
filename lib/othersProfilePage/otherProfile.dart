@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/accountPage/folllowingPage/followingScreen.dart';
 import 'package:tutorchat/extentions.dart';
+import 'package:tutorchat/othersProfilePage/response.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../const.dart';
 import '../../models/profileModel.dart';
 import '../../widgets/textStyle.dart';
-import 'PortfolioPage/userPortfolioScreen.dart';
-import 'editeProfilePage/editeProfileScreen.dart';
-import 'folllowingPage/response.dart';
-import 'followersPage/followersScreen.dart';
 
-class ProfileScreen extends StatefulWidget {
+class OtherProfile extends StatefulWidget {
   final ProfileModel profileData;
-  const ProfileScreen({super.key, required this.profileData});
+  const OtherProfile({super.key, required this.profileData});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<OtherProfile> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<OtherProfile> {
   String? userPhoto;
 
   @override
@@ -44,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 90,
                 child: ClipOval(
                   child: Image.memory(
-                    constUserPhoto!,
+                    constOtherUserPhoto!,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -53,9 +51,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const FollowersScreen(),
-                    ));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const FollowersScreen(),
+                    // ));
                   },
                   child: Column(
                     children: [
@@ -79,11 +77,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: () async {
-                  await getUserFollowingListFunc();
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const FollowingSceen(),
-                  // ));
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const FollowingSceen(),
+                  ));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -213,16 +210,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: MediaQuery.of(context).size.width,
             height: 41,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const EditeProfileScreen(),
-                    ));
+                  onTap: () async {
+                    await followProfile(widget.profileData.username);
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.32,
+                    width: MediaQuery.of(context).size.width * 0.25,
                     height: 35,
                     decoration: BoxDecoration(
                       boxShadow: [
@@ -236,28 +231,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.white,
                         ),
                       ],
-                      color: Colors.white,
+                      color: '5790DF'.toColor(),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: const Center(
-                        child: Text('Edite profile',
+                        child: Text('Follow',
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500))),
                   ),
                 ),
-                const SizedBox(
-                  width: 25,
-                ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PortfolioScreen(),
-                    ));
-                  },
+                  onTap: () {},
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.32,
+                    width: MediaQuery.of(context).size.width * 0.25,
                     height: 35,
                     decoration: BoxDecoration(
                       boxShadow: [
@@ -276,6 +265,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     child: const Center(
                         child: Text('Portfolio',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500))),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const PortfolioScreen(),
+                    // ));
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 10,
+                            offset: const Offset(0, 6),
+                            color: Colors.grey.shade400),
+                        const BoxShadow(
+                          blurRadius: 10,
+                          offset: Offset(0, 3),
+                          color: Colors.white,
+                        ),
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Center(
+                        child: Text('Message',
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 13,
