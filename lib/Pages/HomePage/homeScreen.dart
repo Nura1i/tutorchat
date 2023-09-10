@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/messagePage/messageScreen.dart';
 import 'package:tutorchat/extentions.dart';
 
 import '../../models/item.dart';
@@ -46,20 +47,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SizedBox(
                             width: 24,
                             height: 29,
-                            child: Badge(
-                                backgroundColor: 'F8361B'.toColor(),
-                                label: Text(
-                                  informations.toString(),
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'OpenSans',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 8),
-                                ),
-                                child: const Image(
-                                  image: AssetImage('icon/bellicon.png'),
-                                )),
+                            child: InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  return MessageScreen();
+                                }));
+                              },
+                              child: Badge(
+                                  backgroundColor: 'F8361B'.toColor(),
+                                  label: Text(
+                                    informations.toString(),
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'OpenSans',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 8),
+                                  ),
+                                  child: const Image(
+                                    image: AssetImage('icon/bellicon.png'),
+                                  )),
+                            ),
                           ),
                         ),
                         Padding(

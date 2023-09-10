@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tutorchat/Pages/chatPage/reply.dart';
 import 'package:tutorchat/widgets/textStyle.dart';
 
-List<ChatMessage> _messages = [];
+import 'chat.dart';
+
+List<Widget> _messages = [];
+List<Widget> _replydividers = [];
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -11,18 +15,29 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+
+  FocusNode focusNode = FocusNode();
   /// Controllers
-  var _textEditingController;
+  int indexlist = -1;
+  bool controllerreplyortext = false;
   final _scrollController = ScrollController();
+  TextEditingController _textEditingControllertext = TextEditingController();
+
 
   @override
   void initState() {
-    _textEditingController = TextEditingController();
+    _textEditingControllertext = TextEditingController();
     super.initState();
+  }
+  @override
+  void dispose(){
+    focusNode.unfocus();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final keyboardsize = MediaQuery.of(context).viewInsets.bottom;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -47,21 +62,36 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Column(children: [
-            Container(
-              color: Colors.white,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 150,
-              child: ListView.builder(
-                controller: _scrollController,
-                scrollDirection: Axis.vertical,
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  return _messages[index];
-                },
+          child: Column(
+                children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height-MediaQuery.of(context).viewInsets.bottom - 150,
+                color: Colors.white,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  scrollDirection: Axis.vertical,
+                  itemCount: _messages.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        _messages[index],
+                        GestureDetector(
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(focusNode);
+                            controllerreplyortext = true;
+                            indexlist = index;
+                          },
+                          child: _replydividers[index],
+                        ),
+                       // index==_messages.length ? Container(height: keyboardsize,) : Container(height: keyboardsize,),
+                        ],
+                    );
+                  },
+                ),
               ),
-            ),
-          ]),
+              keyboardsize!=0 ? Container(height: keyboardsize + 20 ,) : Container(),
+            ]),
         ),
         floatingActionButton: Padding(
           padding: EdgeInsets.only(
@@ -73,27 +103,29 @@ class _ChatScreenState extends State<ChatScreen> {
                 borderRadius: BorderRadius.circular(30),
               ),
               child: TextField(
+                focusNode: focusNode,
                 onTap: () {
-                  _scrollController
-                      .jumpTo(_scrollController.position.maxScrollExtent);
+                 setState(() {
+                   _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+                 });
+                  },
+                onEditingComplete: (){
+                  _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
                 },
                 scrollPadding: const EdgeInsets.only(left: 10),
                 textAlign: TextAlign.left,
-                controller: _textEditingController,
+                controller: _textEditingControllertext,
                 decoration: InputDecoration(
                     suffixIcon: IconButton(
                       onPressed: () {
-                        if (_textEditingController!.text != '') {
-                          _sendMessage(_textEditingController!.text);
-                        }
-                        _scrollController
-                            .jumpTo(_scrollController.position.maxScrollExtent);
-                      },
-                      icon: const Icon(
-                        Icons.send,
-                        size: 20,
-                        color: Colors.black,
-                      ),
+                        setState(() {
+                          if (_textEditingControllertext.text != '') {
+                            _sendMessage(_textEditingControllertext.text,indexlist);
+                          }
+                          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+                        });
+                         },
+                      icon: const Icon(Icons.send, size: 20, color: Colors.black,),
                     ),
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.only(left: 20, top: 10),
@@ -104,10 +136,11 @@ class _ChatScreenState extends State<ChatScreen> {
                         fontSize: 16,
                         color: Color(0xff4E4A4A))),
                 onSubmitted: (text) {
-                  text.isNotEmpty ? _sendMessage(text) : null;
-                  _scrollController
-                      .jumpTo(_scrollController.position.maxScrollExtent);
-                },
+                  setState(() {
+                    text.isNotEmpty ? _sendMessage(text, indexlist) : null;
+                    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+                  });
+                  },
               ),
             ),
           ),
@@ -116,127 +149,56 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _sendMessage(String text) {
+  void _sendMessage(String text,int indexlist) {
     setState(() {
-      _messages.add(
-        ChatMessage(
-          username: "Shahbozbek",
-          imageName: "assets/png/userpicture.png",
-          text: text,
-          pressBigText: false,
-        ),
-      );
-      _textEditingController!.clear();
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    });
-  }
-}
-
-class ChatMessage extends StatefulWidget {
-  final String text;
-  final String username;
-  final String imageName;
-  bool pressBigText = false;
-
-  ChatMessage(
-      {super.key,
-      required this.username,
-      required this.imageName,
-      required this.text,
-      required this.pressBigText});
-
-  @override
-  State<ChatMessage> createState() => _ChatMessageState();
-}
-
-class _ChatMessageState extends State<ChatMessage> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 30.0, top: 10, right: 30),
-      child: Stack(children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: SizedBox(
-            width: 40.86,
-            height: 40,
-            child: CircleAvatar(
-              child: Image(
-                image: AssetImage(widget.imageName),
-              ),
+      controllerreplyortext ?
+      _messages.insert(indexlist+1, ReplyMessage('Shahbozbek', text, 'assets/png/userpicture.png', false)):
+      _messages.add(ChatMessage(username: "Shahbozbek", imageName: "assets/png/userpicture.png", text: text, pressBigText: false,),) ;
+      if(controllerreplyortext){_replydividers[indexlist] = Padding(
+        padding:  EdgeInsets.only(top: 10, left: 63, right: 63),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children:  [
+            Text(
+              'Reply',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontFamily: 'Open Sans',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15,
+                  color: Color(0xff9A9A9A)),
             ),
-          ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 50.0, right: 50, top: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                  height: 23,
-                  child: Text(
-                    widget.username,
-                    style: textStyle(
-                        FontWeight.w600, 17, Colors.black, 'Open Sans'),
-                  )),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (widget.text.length > 50) {
-                      widget.pressBigText = !widget.pressBigText;
-                    }
-                  });
-                },
-                child: Container(
-                  width: 244,
-                  height: widget.pressBigText
-                      ? (widget.text.length * 80) / 120
-                      : 55,
-                  color: Colors.white,
-                  child: Text(
-                    widget.text,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: 'Open Sans',
-                        color: Colors.black),
-                    overflow: TextOverflow.clip,
-                    maxLines: widget.pressBigText
-                        ? (widget.text.length / 29 + 2).ceil()
-                        : 4,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const [
-                    Text(
-                      'Reply',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          fontFamily: 'Open Sans',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          color: Color(0xff9A9A9A)),
-                    ),
-                    Divider(
-                      height: 5,
-                      thickness: 1,
-                      color: Color(0xff9A9A9A),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+      );}
+      _replydividers.add(Padding(
+        padding:  EdgeInsets.only(top: 10, left: 63, right: 63),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children:  [
+            Text(
+              'Reply',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontFamily: 'Open Sans',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15,
+                  color: Color(0xff9A9A9A)),
+            ),
+            Divider(
+              height: 5,
+              thickness: 1,
+              color: Color(0xff9A9A9A),
+            ),
+          ],
         ),
-      ]),
-    );
+      ));
+       _textEditingControllertext.clear();
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      controllerreplyortext = false;
+    });
+    focusNode.unfocus();
   }
 }

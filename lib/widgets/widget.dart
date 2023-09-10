@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tutorchat/Pages/chatPage/chatScreen.dart';
 import 'package:tutorchat/extentions.dart';
 
+import '../Pages/chatPage/chat.dart';
+
 /**
     Fanlar ketma ketligi uchun yaratilgan widget.
  **/
